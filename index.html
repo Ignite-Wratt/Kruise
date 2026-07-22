@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kruise — Storefront</title>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+<!-- ===== Kruise design tokens (from the design system) ===== -->
+<style>
+/* colors.css */
+:root{
+  --blueberry-900:#1b2a63;--blueberry-700:#253a86;--blueberry:#2e4699;--blueberry-500:#4459b4;--blueberry-300:#8f9bd6;--blueberry-100:#dfe3f4;--blueberry-50:#eef0fa;
+  --cherry-900:#8f1533;--cherry:#ed1b54;--cherry-300:#f78aa6;--cherry-100:#fcdde5;
+  --tangerine-900:#b25e00;--tangerine:#fb9b1e;--tangerine-300:#fdcb8a;--tangerine-100:#feeed8;
+  --lemon-900:#b28800;--lemon:#fbcb1e;--lemon-300:#fde58a;--lemon-100:#fef7d8;
+  --lime-900:#0c5c30;--lime:#189c48;--lime-300:#86d3a2;--lime-100:#d9f2e2;
+  --wave-900:#1c5772;--wave:#2e8aa8;--wave-300:#97cad9;--wave-100:#dceef3;
+  --sky-900:#3f8bab;--sky:#8fcde5;--sky-300:#c3e5f1;--sky-100:#e9f6fb;
+  --ink-900:#16183a;--ink-700:#33355c;--ink-500:#64668a;--ink-300:#a9abc4;--ink-100:#d9dae8;
+  --paper:#fbfaff;--cream:#fff8ec;--white:#ffffff;
+  --text-heading:var(--blueberry-900);--text-body:var(--ink-700);--surface-sunk:var(--blueberry-50);
+  --border-soft:var(--blueberry-100);--border-ink:var(--ink-900);
+}
+/* typography.css */
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&family=DM+Mono:wght@400;500&display=swap');
+:root{
+  --font-display:'Baloo 2','Trebuchet MS',system-ui,sans-serif;
+  --font-body:'Nunito',system-ui,-apple-system,sans-serif;
+  --font-mono:'DM Mono',ui-monospace,'SFMono-Regular',monospace;
+  --fw-extrabold:800;
+}
+/* layout.css (subset used) */
+:root{
+  --space-3:0.75rem;--space-4:1rem;
+  --radius-lg:20px;--radius-xl:28px;--radius-pill:999px;
+  --shadow-sticker-sm:0 3px 0 0 var(--ink-900);--shadow-sticker-lg:0 6px 0 0 var(--ink-900);
+  --shadow-pop:0 10px 0 0 var(--ink-900),0 22px 30px -12px rgba(22,24,58,0.35);
+  --ease-bounce:cubic-bezier(0.34,1.56,0.64,1);--dur:200ms;--dur-fast:120ms;
+}
+/* patterns.css */
+.kr-sunburst{background-color:var(--sunburst-a);background-image:repeating-conic-gradient(from 0deg at var(--sunburst-origin,50% 24%),var(--sunburst-a) 0deg var(--sunburst-wedge,15deg),var(--sunburst-b) var(--sunburst-wedge,15deg) calc(var(--sunburst-wedge,15deg) * 2));}
+[data-sunburst-rays="fine"]{--sunburst-wedge:11deg;}
+[data-sunburst="cherry"]{--sunburst-a:var(--cherry-900);--sunburst-b:var(--cherry);}
+.kr-wordmark-box{display:inline-flex;align-items:center;justify-content:center;padding:0.35em 0.7em;background:var(--blueberry);color:var(--white);font-family:var(--font-display);font-weight:var(--fw-extrabold);letter-spacing:0.01em;line-height:1;border-radius:var(--radius-pill);border:4px solid var(--white);box-shadow:0 0 0 3px var(--border-ink);}
+.kr-try-badge{display:inline-grid;place-items:center;width:64px;height:64px;border-radius:var(--radius-pill);background:var(--white);color:var(--blueberry);font-family:var(--font-display);font-weight:var(--fw-extrabold);font-size:14px;text-transform:uppercase;letter-spacing:0.04em;text-align:center;box-shadow:var(--shadow-sticker-sm);}
+</style>
+
+<!-- ===== template styles + component styles ===== -->
+<style>
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--text-body);font-family:var(--font-body);-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  .kNavLink:hover{color:var(--cherry);}
+  .kTile{transition:transform var(--dur) var(--ease-bounce),box-shadow var(--dur) var(--ease-bounce);}
+  .kTile:hover{transform:translateY(-4px);box-shadow:0 8px 0 0 var(--ink-900);}
+  .kEmpty{display:flex;align-items:center;justify-content:center;text-align:center;color:var(--ink-500);font-family:var(--font-mono);font-size:13px;letter-spacing:0.02em;background-image:repeating-linear-gradient(45deg,var(--blueberry-50) 0 14px,var(--blueberry-100) 14px 28px);}
+  .kEmpty span{background:var(--paper);padding:5px 12px;border-radius:999px;border:2px solid var(--border-soft);}
+  .kIgTile{transition:transform var(--dur) var(--ease-bounce);}
+  .kIgTile:hover{transform:scale(1.02);}
+
+  /* Button (from Button.jsx) */
+  .kbtn{font-family:var(--font-display);font-weight:800;line-height:1;border-radius:var(--radius-pill);cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:3px solid var(--ink-900);transition:transform var(--dur-fast) var(--ease-bounce),box-shadow var(--dur-fast) var(--ease-bounce),background var(--dur-fast);user-select:none;}
+  .kbtn--sm{padding:8px 16px;font-size:14px;box-shadow:0 3px 0 0 var(--ink-900);}
+  .kbtn--md{padding:12px 24px;font-size:16px;box-shadow:0 4px 0 0 var(--ink-900);}
+  .kbtn--lg{padding:16px 32px;font-size:18px;box-shadow:0 5px 0 0 var(--ink-900);}
+  .kbtn:active{transform:translateY(4px);box-shadow:0 0 0 0 var(--ink-900);}
+  .kbtn--primary{background:var(--blueberry);color:#fff;}
+  .kbtn--accent{background:var(--cherry);color:#fff;}
+  .kbtn--outline{background:var(--white);color:var(--blueberry-900);}
+  .kbtn--cherry{background:var(--cherry);color:#fff;}
+  .kbtn--lime{background:var(--lime);color:#fff;}
+  .kbtn--wave{background:var(--wave);color:#fff;}
+  .kbtn--sky{background:var(--sky);color:var(--ink-900);}
+  .kbtn--tangerine{background:var(--tangerine);color:var(--ink-900);}
+  .kbtn--blueberry{background:var(--blueberry);color:#fff;}
+
+  /* ProductCard / Tag / Badge (from *.jsx) */
+  .pc{background:var(--white);border:3px solid var(--ink-900);border-radius:var(--radius-xl);box-shadow:var(--shadow-sticker-lg);overflow:hidden;display:flex;flex-direction:column;}
+  .pc__top{position:relative;height:180px;display:flex;align-items:center;justify-content:center;border-bottom:3px solid var(--ink-900);--sunburst-origin:50% 30%;}
+  .pc__circle{width:132px;height:132px;border-radius:var(--radius-pill);background:rgba(255,255,255,0.28);display:grid;place-items:center;box-shadow:inset 0 0 0 2px rgba(255,255,255,0.45);}
+  .pc__circle img{max-width:78%;max-height:78%;object-fit:contain;filter:drop-shadow(0 3px 0 rgba(22,24,58,0.18));}
+  .pc__emoji{font-size:64px;line-height:1;filter:drop-shadow(0 3px 0 rgba(22,24,58,0.18));}
+  .pc__body{padding:var(--space-4);display:flex;flex-direction:column;gap:var(--space-3);}
+  .pc__name{margin:0;font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--blueberry-900);}
+  .pc__notes{display:flex;flex-wrap:wrap;gap:6px;}
+  .pc__foot{display:flex;align-items:center;justify-content:space-between;margin-top:4px;}
+  .pc__price{font-family:var(--font-display);font-weight:800;font-size:20px;color:var(--blueberry-900);}
+  .tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-body);font-weight:800;border-radius:var(--radius-pill);border:2px solid var(--border-ink);white-space:nowrap;padding:3px 10px;font-size:12px;}
+  .tag--cherry{background:var(--cherry-100);color:var(--cherry-900);}
+  .tag--sky{background:var(--sky-100);color:var(--sky-900);}
+  .tag--tangerine{background:var(--tangerine-100);color:var(--tangerine-900);}
+  .tag--wave{background:var(--wave-100);color:var(--wave-900);}
+  .tag--blueberry{background:var(--blueberry-100);color:var(--blueberry-900);}
+  .tag--lime{background:var(--lime-100);color:var(--lime-900);}
+  .badge{position:absolute;top:12px;left:12px;display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 7px;font-family:var(--font-display);font-weight:800;font-size:12px;line-height:1;border-radius:var(--radius-pill);border:2px solid var(--ink-900);text-transform:uppercase;letter-spacing:0.04em;}
+  .badge--accent{background:var(--cherry);color:#fff;}
+  .badge--neutral{background:var(--ink-900);color:#fff;}
+</style>
+</head>
+<body>
+<div style="font-family:var(--font-body);color:var(--text-body);">
+
+  <!-- Announcement bar -->
+  <div style="background:var(--blueberry);color:var(--white);text-align:center;font-family:var(--font-display);font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-size:13px;padding:10px 16px;display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap;">
+    <span>Free shipping over $35</span><span style="opacity:.5;">•</span>
+    <span>New drop: Cherry Bombastic 🍒</span><span style="opacity:.5;">•</span>
+    <span>Collect all 6 scents</span>
+  </div>
+
+  <!-- Header -->
+  <header style="position:sticky;top:0;z-index:50;background:var(--paper);border-bottom:2px solid var(--border-soft);padding:14px 24px;">
+    <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;">
+      <nav style="display:flex;align-items:center;gap:22px;font-family:var(--font-display);font-weight:700;font-size:15px;letter-spacing:0.02em;">
+        <a href="#" class="kNavLink">Shop</a><a href="#" class="kNavLink">New</a>
+        <a href="#" class="kNavLink">Bundles</a><a href="#" class="kNavLink">Quiz</a>
+      </nav>
+      <a href="#" style="justify-self:center;display:flex;align-items:center;"><img src="assets/kruise-logo.png" alt="Kruise" style="height:30px;width:auto;display:block;"></a>
+      <div style="display:flex;align-items:center;justify-content:flex-end;gap:8px;">
+        <button aria-label="Search" style="width:42px;height:42px;border-radius:999px;border:2px solid var(--border-soft);background:var(--white);display:grid;place-items:center;cursor:pointer;"><i data-lucide="search" style="width:19px;height:19px;color:var(--blueberry-900);"></i></button>
+        <button aria-label="Account" style="width:42px;height:42px;border-radius:999px;border:2px solid var(--border-soft);background:var(--white);display:grid;place-items:center;cursor:pointer;"><i data-lucide="user" style="width:19px;height:19px;color:var(--blueberry-900);"></i></button>
+        <div style="position:relative;">
+          <button aria-label="Cart" style="height:42px;padding:0 16px 0 14px;border-radius:999px;border:3px solid var(--border-ink);background:var(--blueberry);color:var(--white);font-family:var(--font-display);font-weight:700;font-size:14px;display:flex;align-items:center;gap:7px;cursor:pointer;box-shadow:0 3px 0 0 var(--ink-900);"><i data-lucide="shopping-bag" style="width:18px;height:18px;"></i>Cart</button>
+          <span id="cartCount" style="position:absolute;top:-7px;right:-7px;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:var(--cherry);color:var(--white);border:2px solid var(--white);font-family:var(--font-display);font-weight:800;font-size:12px;display:grid;place-items:center;">0</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section style="background:var(--lemon-100);border-bottom:3px solid var(--border-ink);overflow:hidden;">
+    <div style="max-width:1200px;margin:0 auto;padding:72px 24px;display:grid;grid-template-columns:1.05fr 0.95fr;gap:48px;align-items:center;">
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:8px;background:var(--cherry);color:var(--white);font-family:var(--font-display);font-weight:800;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;padding:7px 14px;border-radius:999px;border:2px solid var(--border-ink);box-shadow:0 3px 0 0 var(--ink-900);">New drop 🍒</div>
+        <h1 style="font-family:var(--font-display);font-weight:800;color:var(--blueberry-900);font-size:clamp(44px,6vw,76px);line-height:1.02;letter-spacing:-0.01em;margin:20px 0 0;">Smells like<br>summer.<br>All drive long.</h1>
+        <p style="font-size:19px;line-height:1.6;color:var(--ink-700);max-width:440px;margin:20px 0 0;">Clip it to the vent and let it rip. Juicy, loud candy-shop scents that stay fresh for 45+ days.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:32px;">
+          <button class="kbtn kbtn--primary kbtn--lg">Shop the drop</button>
+          <button class="kbtn kbtn--outline kbtn--lg">Take the scent quiz</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:20px;margin-top:28px;font-family:var(--font-display);font-weight:700;color:var(--blueberry-900);font-size:14px;flex-wrap:wrap;">
+          <span>🌿 Non-toxic</span><span>♻️ Refillable</span><span>⭐ 4.9 / 5</span>
+        </div>
+      </div>
+      <div style="position:relative;min-height:460px;display:grid;place-items:center;">
+        <div class="kr-sunburst" data-sunburst="cherry" style="position:relative;width:320px;height:460px;border:4px solid var(--border-ink);border-radius:34px;box-shadow:var(--shadow-pop);overflow:hidden;padding:26px 22px;">
+          <div style="position:absolute;top:14px;left:50%;transform:translateX(-50%);width:78px;height:20px;border-radius:999px;background:var(--paper);border:2px solid var(--sky);"></div>
+          <div class="kr-try-badge" style="position:absolute;top:16px;right:16px;width:56px;height:56px;color:var(--cherry);font-size:12px;">TRY<br>ME</div>
+          <div style="margin-top:52px;text-align:center;"><span class="kr-wordmark-box" style="font-size:44px;">KRUISE</span></div>
+          <div style="margin-top:22px;font-family:var(--font-display);font-weight:800;color:#fff;font-size:38px;line-height:0.95;text-transform:uppercase;letter-spacing:0.01em;text-shadow:0 2px 0 rgba(22,24,58,0.25);">Cherry<br>Bombastic</div>
+          <div style="position:absolute;left:50%;bottom:104px;transform:translateX(-50%);width:150px;height:150px;border-radius:999px;background:var(--cherry);border:6px solid var(--cherry-300);display:grid;place-items:center;box-shadow:inset 0 6px 12px rgba(255,255,255,0.35),inset 0 -6px 12px rgba(22,24,58,0.25);">
+            <span style="font-family:var(--font-display);font-weight:800;color:#fff;font-size:26px;letter-spacing:0.01em;">KRUISE</span>
+          </div>
+          <img src="assets/cherries.png" alt="" style="position:absolute;left:-10px;bottom:-10px;width:120px;filter:drop-shadow(0 4px 0 rgba(22,24,58,0.18));">
+          <div style="position:absolute;right:18px;bottom:16px;text-align:right;font-family:var(--font-display);color:#fff;line-height:1;">
+            <div style="font-weight:800;font-size:28px;">30 DAY</div>
+            <div style="font-weight:700;font-size:13px;letter-spacing:0.04em;">LONG LASTING</div>
+            <div style="font-weight:600;font-size:12px;opacity:0.85;margin-top:3px;">10ML / 0.34 FL OZ</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Category tiles -->
+  <section style="padding:64px 24px 8px;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;">
+        <a href="#" class="kTile" style="background:var(--cherry-100);border:3px solid var(--border-ink);border-radius:28px;box-shadow:0 4px 0 0 var(--ink-900);padding:22px;display:flex;flex-direction:column;gap:14px;">
+          <div class="kr-sunburst" data-sunburst-rays="fine" style="--sunburst-a:var(--cherry-900);--sunburst-b:var(--cherry);height:150px;border-radius:18px;border:2px solid var(--border-ink);display:grid;place-items:center;"><span class="kr-wordmark-box" style="font-size:22px;border-width:3px;">KRUISE</span></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;font-family:var(--font-display);font-weight:800;color:var(--blueberry-900);font-size:18px;">Vent Clips <i data-lucide="arrow-right" style="width:20px;height:20px;"></i></div>
+        </a>
+        <a href="#" class="kTile" style="background:var(--tangerine-100);border:3px solid var(--border-ink);border-radius:28px;box-shadow:0 4px 0 0 var(--ink-900);padding:22px;display:flex;flex-direction:column;gap:14px;">
+          <div class="kr-sunburst" data-sunburst-rays="fine" style="--sunburst-a:#f0421c;--sunburst-b:var(--tangerine);height:150px;border-radius:18px;border:2px solid var(--border-ink);display:grid;place-items:center;"><span class="kr-wordmark-box" style="font-size:22px;border-width:3px;">KRUISE</span></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;font-family:var(--font-display);font-weight:800;color:var(--blueberry-900);font-size:18px;">3-Packs <i data-lucide="arrow-right" style="width:20px;height:20px;"></i></div>
+        </a>
+        <a href="#" class="kTile" style="background:var(--lime-100);border:3px solid var(--border-ink);border-radius:28px;box-shadow:0 4px 0 0 var(--ink-900);padding:22px;display:flex;flex-direction:column;gap:14px;">
+          <div class="kr-sunburst" data-sunburst-rays="fine" style="--sunburst-a:var(--wave);--sunburst-b:#3fb6a0;height:150px;border-radius:18px;border:2px solid var(--border-ink);display:grid;place-items:center;"><span class="kr-wordmark-box" style="font-size:22px;border-width:3px;">KRUISE</span></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;font-family:var(--font-display);font-weight:800;color:var(--blueberry-900);font-size:18px;">Scent Bundles <i data-lucide="arrow-right" style="width:20px;height:20px;"></i></div>
+        </a>
+        <a href="#" class="kTile" style="background:var(--sky-100);border:3px solid var(--border-ink);border-radius:28px;box-shadow:0 4px 0 0 var(--ink-900);padding:22px;display:flex;flex-direction:column;gap:14px;">
+          <div class="kr-sunburst" data-sunburst-rays="fine" style="--sunburst-a:var(--sky);--sunburst-b:var(--sky-300);height:150px;border-radius:18px;border:2px solid var(--border-ink);display:grid;place-items:center;"><span class="kr-wordmark-box" style="font-size:22px;border-width:3px;">KRUISE</span></div>
+          <div style="display:flex;align-items:center;justify-content:space-between;font-family:var(--font-display);font-weight:800;color:var(--blueberry-900);font-size:18px;">Refills <i data-lucide="arrow-right" style="width:20px;height:20px;"></i></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Best sellers -->
+  <section style="padding:56px 24px;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:28px;">
+        <h2 style="font-family:var(--font-display);font-weight:800;color:var(--blueberry-900);font-size:clamp(32px,4vw,44px);margin:0;letter-spacing:-0.01em;">Collect all six</h2>
+        <a href="#" style="font-family:var(--font-display);font-weight:700;color:var(--blueberry);display:inline-flex;align-items:center;gap:6px;font-size:15px;">Shop all <i data-lucide="arrow-right" style="width:18px;height:18px;"></i></a>
+      </div>
+      <div id="productGrid" style="display:grid;gap:20px;grid-template-columns:repeat(3,minmax(0,1fr));"></div>
+    </div>
+  </section>
+
+  <!-- Reviews strip -->
+  <section style="background:var(--cherry-100);border-top:3px solid var(--border-ink);border-bottom:3px solid var(--border-ink);padding:64px 24px;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <h2 style="font-family:var(--font-display);font-weight:800;color:var(--blueberry-900);font-size:clamp(30px,4vw,42px);text-align:center;margin:0 0 8px;letter-spacing:-0.01em;">Words from the back seat</h2>
+      <p style="text-align:center;color:var(--ink-700);font-size:17px;margin:0 0 36px;">45,000+ clips shipped · ⭐ 4.9 average</p>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+        <div style="background:var(--white);border:3px solid var(--border-ink);border-radius:24px;box-shadow:0 5px 0 0 var(--ink-900);padding:26px;">
+          <div style="color:var(--tangerine);font-size:18px;margin-bottom:10px;">★★★★★</div>
+          <p style="font-family:var(--font-display);font-weight:700;color:var(--blueberry-900);font-size:19px;line-height:1.35;margin:0 0 16px;">“My whole car smells like a candy store. Everyone asks what it is.”</p>
+          <div style="font-weight:700;color:var(--ink-500);font-size:14px;">Hailey B.</div>
+        </div>
+        <div style="background:var(--white);border:3px solid var(--border-ink);border-radius:24px;box-shadow:0 5px 0 0 var(--ink-900);padding:26px;">
+          <div style="color:var(--tangerine);font-size:18px;margin-bottom:10px;">★★★★★</div>
+          <p style="font-family:var(--font-display);font-weight:700;color:var(--blueberry-900);font-size:19px;line-height:1.35;margin:0 0 16px;">“Cherry Bomb still going strong after 6 weeks. Zero spills, all juice.”</p>
+          <div style="font-weight:700;color:var(--ink-500);font-size:14px;">Marcus T.</div>
+        </div>
+        <div style="background:var(--white);border:3px solid var(--border-ink);border-radius:24px;box-shadow:0 5px 0 0 var(--ink-900);padding:26px;">
+          <div style="color:var(--tangerine);font-size:18px;margin-bottom:10px;">★★★★★</div>
+          <p style="font-family:var(--font-display);font-weight:700;color:var(--blueberry-900);font-size:19px;line-height:1.35;margin:0 0 16px;">“Collected all six. Wave Rider is my summer, Cloud Nine is my winter.”</p>
+          <div style="font-weight:700;color:var(--ink-500);font-size:14px;">Priya N.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Editorial split rows -->
+  <section style="padding:72px 24px;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <h2 style="font-family:var(--font-display);font-weight:800;color:var(--blueberry-900);font-size:clamp(32px,4.5vw,52px);text-align:center;margin:0 0 48px;letter-spacing:-0.01em;">Scent every mile.</h2>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-bottom:56px;">
+        <div class="kEmpty" style="height:340px;border:3px solid var(--border-ink);border-radius:32px;box-shadow:0 6px 0 0 var(--ink-900);"><span>lifestyle — the daily commute</span></div>
+        <div>
+          <div style="font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.12em;font-size:13px;color:var(--cherry);margin-bottom:10px;">On the drive</div>
+          <h3 style="font-family:var(--font-display);font-weight:800;color:var(--blueberry-900);font-size:32px;margin:0 0 12px;">Make the commute smell good.</h3>
+          <p style="font-size:17px;line-height:1.6;color:var(--ink-700);max-width:420px;margin:0 0 22px;">One clip on the vent, and every red light smells like fresh-cut fruit.</p>
+          <button class="kbtn kbtn--cherry kbtn--md">Shop vent clips</button>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;margin-bottom:56px;">
+        <div class="kEmpty" style="height:340px;border:3px solid var(--border-ink);border-radius:32px;box-shadow:0 6px 0 0 var(--ink-900);order:2;"><span>lifestyle — closet + locker</span></div>
+        <div style="order:1;">
+          <div style="font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.12em;font-size:13px;color:var(--lime-900);margin-bottom:10px;">Everywhere else</div>
+          <h3 style="font-family:var(--font-display);font-weight:800;color:var(--blueberry-900);font-size:32px;margin:0 0 12px;">Closets, lockers, gym bags.</h3>
+          <p style="font-size:17px;line-height:1.6;color:var(--ink-700);max-width:420px;margin:0 0 22px;">Not just cars. Hang a clip anywhere that could use a little candy-shop glow-up.</p>
+          <button class="kbtn kbtn--lime kbtn--md">Shop bundles</button>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;">
+        <div class="kEmpty" style="height:340px;border:3px solid var(--border-ink);border-radius:32px;box-shadow:0 6px 0 0 var(--ink-900);"><span>lifestyle — refill pack flatlay</span></div>
+        <div>
+          <div style="font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.12em;font-size:13px;color:var(--wave-900);margin-bottom:10px;">Keep it going</div>
+          <h3 style="font-family:var(--font-display);font-weight:800;color:var(--blueberry-900);font-size:32px;margin:0 0 12px;">Refill, don't rebuy.</h3>
+          <p style="font-size:17px;line-height:1.6;color:var(--ink-700);max-width:420px;margin:0 0 22px;">Keep the clip, swap the scent. Half the price, half the waste, all the juice.</p>
+          <button class="kbtn kbtn--wave kbtn--md">Shop refills</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Press bar -->
+  <section style="background:var(--surface-sunk);border-top:2px solid var(--border-soft);border-bottom:2px solid var(--border-soft);padding:36px 24px;">
+    <div style="max-width:1000px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;">
+      <span style="font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.12em;font-size:12px;color:var(--ink-500);">As seen in</span>
+      <span style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--blueberry-300);">VOGUE</span>
+      <span style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--blueberry-300);">GQ</span>
+      <span style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--blueberry-300);">Allure</span>
+      <span style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--blueberry-300);">Cosmo</span>
+      <span style="font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--blueberry-300);">Hypebeast</span>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section style="background:var(--blueberry);color:var(--white);padding:72px 24px;">
+    <div style="max-width:640px;margin:0 auto;text-align:center;">
+      <h2 style="font-family:var(--font-display);font-weight:800;font-size:clamp(30px,4vw,44px);margin:0 0 12px;">Get 15% off ur first clip</h2>
+      <p style="font-size:17px;line-height:1.6;color:var(--blueberry-100);margin:0 0 28px;">Join the club for early drops, restocks, and secret flavors before anyone else.</p>
+      <form style="display:flex;gap:12px;max-width:460px;margin:0 auto;" onsubmit="return false;">
+        <input type="email" placeholder="you@email.com" style="flex:1;height:52px;border-radius:999px;border:3px solid var(--border-ink);padding:0 20px;font-family:var(--font-body);font-size:16px;background:var(--white);color:var(--ink-900);">
+        <button class="kbtn kbtn--accent kbtn--lg">Join</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Instagram grid -->
+  <section style="padding:64px 24px;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div style="text-align:center;margin-bottom:28px;">
+        <h2 style="font-family:var(--font-display);font-weight:800;color:var(--blueberry-900);font-size:clamp(28px,3.5vw,40px);margin:0 0 6px;">@kruise in the wild</h2>
+        <a href="#" style="font-family:var(--font-display);font-weight:700;color:var(--cherry);font-size:15px;">Tag us to be featured</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:12px;">
+        <div class="kIgTile kEmpty" style="aspect-ratio:1;border:2px solid var(--border-ink);border-radius:18px;"><span>@ava.j</span></div>
+        <div class="kIgTile kEmpty" style="aspect-ratio:1;border:2px solid var(--border-ink);border-radius:18px;"><span>@driveby</span></div>
+        <div class="kIgTile kEmpty" style="aspect-ratio:1;border:2px solid var(--border-ink);border-radius:18px;"><span>@milo</span></div>
+        <div class="kIgTile kEmpty" style="aspect-ratio:1;border:2px solid var(--border-ink);border-radius:18px;"><span>@sunnyd</span></div>
+        <div class="kIgTile kEmpty" style="aspect-ratio:1;border:2px solid var(--border-ink);border-radius:18px;"><span>@rue</span></div>
+        <div class="kIgTile kEmpty" style="aspect-ratio:1;border:2px solid var(--border-ink);border-radius:18px;"><span>@theo.g</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer style="background:var(--blueberry-900);color:var(--white);padding:56px 24px 32px;">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px;padding-bottom:40px;border-bottom:1px solid rgba(255,255,255,0.15);">
+        <div>
+          <div style="font-family:var(--font-display);font-weight:800;font-size:30px;letter-spacing:0.02em;margin-bottom:12px;">KRUISE</div>
+          <p style="color:var(--blueberry-100);font-size:15px;line-height:1.6;max-width:260px;margin:0;">Car air fresheners that smell like a candy store. Collect all six.</p>
+        </div>
+        <div>
+          <div style="font-family:var(--font-display);font-weight:800;font-size:15px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px;">Shop</div>
+          <div style="display:flex;flex-direction:column;gap:10px;color:var(--blueberry-100);font-size:15px;"><a href="#">Vent Clips</a><a href="#">3-Packs</a><a href="#">Bundles</a><a href="#">Refills</a></div>
+        </div>
+        <div>
+          <div style="font-family:var(--font-display);font-weight:800;font-size:15px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px;">Help</div>
+          <div style="display:flex;flex-direction:column;gap:10px;color:var(--blueberry-100);font-size:15px;"><a href="#">FAQ</a><a href="#">Shipping</a><a href="#">Returns</a><a href="#">Contact</a></div>
+        </div>
+        <div>
+          <div style="font-family:var(--font-display);font-weight:800;font-size:15px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:14px;">Connect</div>
+          <div style="display:flex;flex-direction:column;gap:10px;color:var(--blueberry-100);font-size:15px;"><a href="#">Instagram</a><a href="#">TikTok</a><a href="#">Rewards</a><a href="#">Careers</a></div>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding-top:20px;color:var(--blueberry-300);font-size:13px;">
+        <span>© 2026 Kruise</span>
+        <div style="display:flex;gap:18px;"><a href="#">Terms</a><a href="#">Privacy</a></div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+// Product data (mirrors the .dc.html renderVals). All six use the real pack art.
+var products = [
+  {name:'Cherry Bombastic', image:'assets/cherries.png', price:'$12', notes:['Juicy Cherry','Sour Pop'], flavor:'cherry', badge:'NEW'},
+  {name:'Cotton Cloud',      image:'assets/cloud.png',    price:'$12', notes:['Cotton Candy','Vanilla'], flavor:'sky', badge:null},
+  {name:'Tropic Punch',      image:'assets/fruit.png',    price:'$12', notes:['Pineapple','Orange'], flavor:'tangerine', badge:'BEST SELLER'},
+  {name:'Tsunami Breeze',    image:'assets/wave.png',     price:'$12', notes:['Sea Salt','Fresh Air'], flavor:'wave', badge:null},
+  {name:'Clean Machine',     image:'assets/bubbles.png',  price:'$12', notes:['Fresh Linen','Clean Soap'], flavor:'blueberry', badge:null},
+  {name:'Coconut Bliss',     image:'assets/fruit.png',    price:'$12', notes:['Coconut','Pineapple'], flavor:'lime', badge:null},
+];
+var burst = {
+  cherry:['var(--cherry-900)','var(--cherry)'], tangerine:['#f0421c','var(--tangerine)'],
+  lemon:['var(--lemon-900)','var(--lemon)'], lime:['var(--lime-900)','var(--lime)'],
+  wave:['var(--wave)','#3fb6a0'], sky:['var(--sky)','var(--sky-300)'],
+  blueberry:['var(--blueberry)','var(--blueberry-500)']
+};
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function card(p){
+  var b = burst[p.flavor] || burst.cherry;
+  var badge = p.badge ? '<span class="badge badge--'+(p.badge==='SOLD OUT'?'neutral':'accent')+'">'+esc(p.badge)+'</span>' : '';
+  var art = p.image
+    ? '<div class="pc__circle"><img src="'+esc(p.image)+'" alt="'+esc(p.name)+'"></div>'
+    : '<div class="pc__circle"><span class="pc__emoji">'+(p.emoji||'')+'</span></div>';
+  var tags = p.notes.map(function(n){return '<span class="tag tag--'+p.flavor+'">'+esc(n)+'</span>';}).join('');
+  return '<div class="pc">'
+    + '<div class="pc__top kr-sunburst" data-sunburst-rays="fine" style="--sunburst-a:'+b[0]+';--sunburst-b:'+b[1]+';">'+badge+art+'</div>'
+    + '<div class="pc__body">'
+    +   '<h4 class="pc__name">'+esc(p.name)+'</h4>'
+    +   '<div class="pc__notes">'+tags+'</div>'
+    +   '<div class="pc__foot"><span class="pc__price">'+esc(p.price)+'</span>'
+    +     '<button class="kbtn kbtn--'+p.flavor+' kbtn--sm addBtn">Add</button></div>'
+    + '</div></div>';
+}
+document.getElementById('productGrid').innerHTML = products.map(card).join('');
+
+// Cart counter
+var cart = 0, cc = document.getElementById('cartCount');
+document.querySelectorAll('.addBtn').forEach(function(btn){
+  btn.addEventListener('click', function(){ cart++; cc.textContent = cart; });
+});
+
+if (window.lucide) window.lucide.createIcons();
+</script>
+</body>
+</html>
