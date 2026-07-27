@@ -1,9 +1,13 @@
 <header class="k-header">
   <div class="k-header__in">
     <nav class="k-nav">
+      {%- assign has_quiz = false -%}
       {%- for link in section.settings.menu.links -%}
-        <a href="{{ link.url }}">{{ link.title }}</a>
+        <a href="{{ link.url }}"{% if link.active %} class="is-active"{% endif %}>{{ link.title }}</a>
+        {%- assign lt = link.title | downcase -%}
+        {%- if lt == 'quiz' -%}{%- assign has_quiz = true -%}{%- endif -%}
       {%- endfor -%}
+      {%- unless has_quiz -%}<a href="/pages/scent-quiz">Quiz</a>{%- endunless -%}
     </nav>
     <a href="{{ routes.root_url }}" class="k-logo">
       {%- if settings.logo != blank -%}
