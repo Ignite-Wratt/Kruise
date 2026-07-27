@@ -1,0 +1,85 @@
+/* ==========================================================================
+   Kruise design tokens — ported verbatim from the Kruise Design System
+   (tokens/colors.css, typography.css, layout.css, patterns.css)
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,600&family=DM+Mono:wght@400;500&display=swap');
+
+:root {
+  /* Core brand */
+  --blueberry-900: #1b2a63; --blueberry-700: #253a86; --blueberry: #2e4699;
+  --blueberry-500: #4459b4; --blueberry-300: #8f9bd6; --blueberry-100: #dfe3f4; --blueberry-50: #eef0fa;
+  /* Candy flavors */
+  --cherry-900: #8f1533; --cherry: #ed1b54; --cherry-300: #f78aa6; --cherry-100: #fcdde5;
+  --tangerine-900: #b25e00; --tangerine: #fb9b1e; --tangerine-300: #fdcb8a; --tangerine-100: #feeed8;
+  --lemon-900: #b28800; --lemon: #fbcb1e; --lemon-300: #fde58a; --lemon-100: #fef7d8;
+  --lime-900: #0c5c30; --lime: #189c48; --lime-300: #86d3a2; --lime-100: #d9f2e2;
+  --wave-900: #1c5772; --wave: #2e8aa8; --wave-300: #97cad9; --wave-100: #dceef3;
+  --sky-900: #3f8bab; --sky: #8fcde5; --sky-300: #c3e5f1; --sky-100: #e9f6fb;
+  /* Neutrals */
+  --ink-900: #16183a; --ink-700: #33355c; --ink-500: #64668a; --ink-300: #a9abc4; --ink-100: #d9dae8;
+  --paper: #fbfaff; --cream: #fff8ec; --white: #ffffff;
+  /* Semantic */
+  --color-primary: var(--blueberry); --color-primary-hover: var(--blueberry-700); --color-primary-press: var(--blueberry-900);
+  --color-accent: var(--cherry); --color-accent-hover: var(--cherry-900);
+  --text-heading: var(--blueberry-900); --text-body: var(--ink-700); --text-muted: var(--ink-500); --text-link: var(--blueberry);
+  --surface-page: var(--paper); --surface-card: var(--white); --surface-sunk: var(--blueberry-50);
+  --border-soft: var(--blueberry-100); --border-ink: var(--ink-900);
+
+  /* Typography */
+  --font-display: 'Baloo 2', 'Trebuchet MS', system-ui, sans-serif;
+  --font-body: 'Nunito', system-ui, -apple-system, sans-serif;
+  --font-mono: 'DM Mono', ui-monospace, 'SFMono-Regular', monospace;
+  --fw-extrabold: 800;
+
+  /* Spacing / radius / shadows / motion */
+  --space-3: 0.75rem; --space-4: 1rem;
+  --radius-pill: 999px; --radius-lg: 20px; --radius-xl: 28px; --radius-2xl: 40px;
+  --shadow-sticker-lg: 0 6px 0 0 var(--ink-900);
+  --shadow-pop: 0 10px 0 0 var(--ink-900), 0 22px 30px -12px rgba(22, 24, 58, 0.35);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur: 200ms;
+  --container: 1200px;
+
+  /* Sunburst pattern */
+  --sunburst-a: var(--sky); --sunburst-b: var(--sky-300);
+  --sunburst-origin: 50% 24%; --sunburst-wedge: 15deg;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body { background: var(--paper); color: var(--text-body); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+a { color: var(--text-link); text-decoration: none; }
+a:hover { color: var(--color-accent); }
+
+.kr-sunburst {
+  background-color: var(--sunburst-a);
+  background-image: repeating-conic-gradient(from 0deg at var(--sunburst-origin),
+    var(--sunburst-a) 0deg var(--sunburst-wedge),
+    var(--sunburst-b) var(--sunburst-wedge) calc(var(--sunburst-wedge) * 2));
+}
+[data-sunburst-rays="fine"] { --sunburst-wedge: 11deg; }
+[data-sunburst-rays="broad"] { --sunburst-wedge: 20deg; }
+
+.kr-wordmark-box {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 0.35em 0.7em; background: var(--blueberry); color: var(--white);
+  font-family: var(--font-display); font-weight: var(--fw-extrabold);
+  letter-spacing: 0.01em; line-height: 1; border-radius: var(--radius-pill);
+  border: 4px solid var(--white); box-shadow: 0 0 0 3px var(--border-ink);
+}
+.kr-try-badge {
+  display: inline-grid; place-items: center; width: 64px; height: 64px;
+  border-radius: var(--radius-pill); background: var(--white); color: var(--color-accent);
+  font-family: var(--font-display); font-weight: var(--fw-extrabold); text-transform: uppercase;
+  letter-spacing: 0.04em; text-align: center; box-shadow: 0 3px 10px rgba(22,24,58,0.25);
+}
+
+.kNavLink:hover { color: var(--cherry); }
+.kTile:hover { transform: translateY(-4px); box-shadow: 0 8px 0 0 var(--ink-900); }
+.kEmpty {
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  color: var(--ink-500); font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.02em;
+  background-image: repeating-linear-gradient(45deg, var(--blueberry-50) 0 14px, var(--blueberry-100) 14px 28px);
+}
+.kEmpty span { background: var(--paper); padding: 5px 12px; border-radius: 999px; border: 2px solid var(--border-soft); }
+.kIgTile:hover { transform: scale(1.02); }
