@@ -1,0 +1,31 @@
+{
+  "general": {
+    "page": "Page",
+    "search": { "title": "Search", "placeholder": "Search the shop", "results": "Results for" },
+    "pagination": { "previous": "Previous", "next": "Next" },
+    "404": { "title": "Wrong turn.", "body": "That page took a different exit. Let's get you back to the good smells.", "link": "Back to shop" },
+    "newsletter": { "success": "You're in — check your inbox for 15% off." }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out",
+      "quantity": "Quantity",
+      "variant": "Option",
+      "sale": "Sale",
+      "from": "From"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your cart",
+      "empty": "Your cart is empty. Go collect some scents.",
+      "subtotal": "Subtotal",
+      "checkout": "Checkout",
+      "continue": "Keep shopping",
+      "remove": "Remove",
+      "note": "Taxes and shipping calculated at checkout."
+    }
+  },
+  "collections": { "general": { "no_products": "Nothing here yet — check back soon." } }
+}

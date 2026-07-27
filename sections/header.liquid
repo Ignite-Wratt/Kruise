@@ -1,0 +1,30 @@
+<header class="k-header">
+  <div class="k-header__in">
+    <nav class="k-nav">
+      {%- for link in section.settings.menu.links -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+    <a href="{{ routes.root_url }}" class="k-logo">
+      {%- if settings.logo != blank -%}
+        <img src="{{ settings.logo | image_url: height: 120 }}" alt="{{ shop.name | escape }}" style="height:{{ settings.logo_height }}px">
+      {%- else -%}
+        <span class="k-logo__text">{{ shop.name | upcase }}</span>
+      {%- endif -%}
+    </a>
+    <div class="k-actions">
+      <a class="k-iconbtn" href="{{ routes.search_url }}" aria-label="Search"><i data-lucide="search" style="width:19px;height:19px"></i></a>
+      <a class="k-iconbtn" href="{{ routes.account_url }}" aria-label="Account"><i data-lucide="user" style="width:19px;height:19px"></i></a>
+      <div class="k-cart">
+        <a class="k-cart__btn" href="{{ routes.cart_url }}" aria-label="Cart"><i data-lucide="shopping-bag" style="width:18px;height:18px"></i>Cart</a>
+        <span class="k-cart__count" data-cart-count>{{ cart.item_count }}</span>
+      </div>
+    </div>
+  </div>
+</header>
+{% schema %}
+{
+  "name": "Header",
+  "settings": [{ "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" }]
+}
+{% endschema %}

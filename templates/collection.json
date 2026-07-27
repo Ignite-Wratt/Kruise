@@ -1,0 +1,7 @@
+{
+  "sections": {
+    "main": { "type": "main-collection", "settings": { "per_page": 12, "columns": "3" } },
+    "newsletter": { "type": "newsletter" }
+  },
+  "order": ["main", "newsletter"]
+}

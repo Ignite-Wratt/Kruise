@@ -1,0 +1,91 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-pack",
+      "settings": {
+        "bg": "#fef7d8",
+        "badge": "New drop 🍒",
+        "heading": "Smells like summer. All drive long.",
+        "subheading": "Clip it to the vent and let it rip. Juicy, loud candy-shop scents that stay fresh for 45+ days.",
+        "cta1_label": "Shop the drop",
+        "cta2_label": "Take the scent quiz",
+        "trust": "🌿 Non-toxic | ♻️ Refillable | ⭐ 4.9 / 5",
+        "pack_flavor": "cherry",
+        "pack_wordmark": "KRUISE",
+        "pack_name": "Cherry Bombastic",
+        "pack_duration": "30 DAY",
+        "pack_volume": "10ML / 0.34 FL OZ"
+      }
+    },
+    "tiles": {
+      "type": "category-tiles",
+      "blocks": {
+        "t1": { "type": "tile", "settings": { "label": "Vent Clips", "flavor": "cherry", "wordmark": "KRUISE" } },
+        "t2": { "type": "tile", "settings": { "label": "3-Packs", "flavor": "tangerine", "wordmark": "KRUISE" } },
+        "t3": { "type": "tile", "settings": { "label": "Scent Bundles", "flavor": "lime", "wordmark": "KRUISE" } },
+        "t4": { "type": "tile", "settings": { "label": "Refills", "flavor": "sky", "wordmark": "KRUISE" } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4"]
+    },
+    "products": {
+      "type": "featured-products",
+      "settings": { "heading": "Collect all six", "count": 6, "columns": "3", "link_label": "Shop all" }
+    },
+    "reviews": {
+      "type": "reviews",
+      "settings": { "heading": "Words from the back seat", "subheading": "45,000+ clips shipped · ⭐ 4.9 average" },
+      "blocks": {
+        "r1": { "type": "review", "settings": { "quote": "My whole car smells like a candy store. Everyone asks what it is.", "author": "Hailey B.", "stars": 5 } },
+        "r2": { "type": "review", "settings": { "quote": "Cherry Bomb still going strong after 6 weeks. Zero spills, all juice.", "author": "Marcus T.", "stars": 5 } },
+        "r3": { "type": "review", "settings": { "quote": "Collected all six. Wave Rider is my summer, Cloud Nine is my winter.", "author": "Priya N.", "stars": 5 } }
+      },
+      "block_order": ["r1", "r2", "r3"]
+    },
+    "editorial": {
+      "type": "editorial-rows",
+      "settings": { "heading": "Scent every mile." },
+      "blocks": {
+        "e1": { "type": "row", "settings": { "eyebrow": "On the drive", "heading": "Make the commute smell good.", "body": "One clip on the vent, and every red light smells like fresh-cut fruit.", "cta_label": "Shop vent clips", "flavor": "cherry", "placeholder": "lifestyle — the daily commute" } },
+        "e2": { "type": "row", "settings": { "eyebrow": "Everywhere else", "heading": "Closets, lockers, gym bags.", "body": "Not just cars. Hang a clip anywhere that could use a little candy-shop glow-up.", "cta_label": "Shop bundles", "flavor": "lime", "placeholder": "lifestyle — closet + locker" } },
+        "e3": { "type": "row", "settings": { "eyebrow": "Keep it going", "heading": "Refill, don't rebuy.", "body": "Keep the clip, swap the scent. Half the price, half the waste, all the juice.", "cta_label": "Shop refills", "flavor": "wave", "placeholder": "lifestyle — refill pack flatlay" } }
+      },
+      "block_order": ["e1", "e2", "e3"]
+    },
+    "press": {
+      "type": "press-bar",
+      "settings": { "label": "As seen in" },
+      "blocks": {
+        "p1": { "type": "logo", "settings": { "name": "VOGUE" } },
+        "p2": { "type": "logo", "settings": { "name": "GQ" } },
+        "p3": { "type": "logo", "settings": { "name": "Allure" } },
+        "p4": { "type": "logo", "settings": { "name": "Cosmo" } },
+        "p5": { "type": "logo", "settings": { "name": "Hypebeast" } }
+      },
+      "block_order": ["p1", "p2", "p3", "p4", "p5"]
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "bg": "#2e4699",
+        "heading": "Get 15% off ur first clip",
+        "body": "Join the club for early drops, restocks, and secret flavors before anyone else.",
+        "placeholder": "you@email.com",
+        "button": "Join"
+      }
+    },
+    "instagram": {
+      "type": "instagram-grid",
+      "settings": { "heading": "@kruise in the wild", "link_label": "Tag us to be featured" },
+      "blocks": {
+        "i1": { "type": "post", "settings": { "handle": "@ava.j" } },
+        "i2": { "type": "post", "settings": { "handle": "@driveby" } },
+        "i3": { "type": "post", "settings": { "handle": "@milo" } },
+        "i4": { "type": "post", "settings": { "handle": "@sunnyd" } },
+        "i5": { "type": "post", "settings": { "handle": "@rue" } },
+        "i6": { "type": "post", "settings": { "handle": "@theo.g" } }
+      },
+      "block_order": ["i1", "i2", "i3", "i4", "i5", "i6"]
+    }
+  },
+  "order": ["hero", "tiles", "products", "reviews", "editorial", "press", "newsletter", "instagram"]
+}

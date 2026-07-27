@@ -1,0 +1,44 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Kruise",
+    "theme_version": "1.0.0",
+    "theme_author": "Ignite Innovations",
+    "theme_documentation_url": "https://github.com/Ignite-Wratt/Kruise",
+    "theme_support_url": "https://github.com/Ignite-Wratt/Kruise/issues"
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      { "type": "image_picker", "id": "logo", "label": "Logo" },
+      { "type": "range", "id": "logo_height", "label": "Logo height", "min": 20, "max": 64, "step": 2, "unit": "px", "default": 30 },
+      { "type": "image_picker", "id": "favicon", "label": "Favicon" },
+      { "type": "text", "id": "brand_blurb", "label": "Footer blurb", "default": "Car air fresheners that smell like a candy store. Collect all six." }
+    ]
+  },
+  {
+    "name": "Product cards",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Flavour colour comes from a product tag like flavor:cherry, or the product metafield custom.flavor. Scent notes come from tags like note:Juicy Cherry."
+      },
+      {
+        "type": "select",
+        "id": "default_flavor",
+        "label": "Default flavour",
+        "options": [
+          { "value": "cherry", "label": "Cherry" },
+          { "value": "tangerine", "label": "Tangerine" },
+          { "value": "lemon", "label": "Lemon" },
+          { "value": "lime", "label": "Lime" },
+          { "value": "wave", "label": "Wave" },
+          { "value": "sky", "label": "Sky" },
+          { "value": "blueberry", "label": "Blueberry" }
+        ],
+        "default": "cherry"
+      },
+      { "type": "checkbox", "id": "show_notes", "label": "Show scent-note tags", "default": true }
+    ]
+  }
+]

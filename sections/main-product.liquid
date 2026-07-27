@@ -1,0 +1,94 @@
+{%- liquid
+  assign flavor = settings.default_flavor | default: 'cherry'
+  for t in product.tags
+    assign tl = t | downcase
+    if tl contains 'flavor:'
+      assign flavor = tl | remove: 'flavor:' | strip
+    endif
+  endfor
+  if product.metafields.custom.flavor != blank
+    assign flavor = product.metafields.custom.flavor | downcase | strip
+  endif
+  assign variant = product.selected_or_first_available_variant
+-%}
+<div class="k-pdp" data-product-root>
+  <div>
+    <div class="k-pdp__media">
+      {%- if product.featured_image -%}
+        <img data-main-image src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.featured_image.alt | escape }}" width="600">
+      {%- else -%}
+        <div class="k-empty" style="height:420px"><span>product image</span></div>
+      {%- endif -%}
+    </div>
+    {%- if product.images.size > 1 -%}
+      <div class="k-pdp__thumbs">
+        {%- for image in product.images limit: 6 -%}
+          <button type="button" class="k-pdp__thumb" data-thumb data-full="{{ image | image_url: width: 1200 }}">
+            <img src="{{ image | image_url: width: 200 }}" alt="{{ image.alt | escape }}" loading="lazy">
+          </button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div>
+    {%- if product.available == false -%}
+      <span class="badge badge--neutral" style="position:static">Sold out</span>
+    {%- elsif product.tags contains 'new' -%}
+      <span class="k-pill">New drop</span>
+    {%- endif -%}
+    <h1>{{ product.title }}</h1>
+    <div class="k-pdp__price" data-price>{{ variant.price | money }}</div>
+
+    {%- assign has_notes = false -%}
+    <div class="pc__notes">
+      {%- for t in product.tags -%}
+        {%- assign tl = t | downcase -%}
+        {%- if tl contains 'note:' -%}
+          <span class="tag tag--{{ flavor }}">{{ t | remove_first: 'note:' | remove_first: 'Note:' | strip }}</span>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    <form method="post" action="{{ routes.cart_add_url }}" id="AddToCartForm">
+      {%- if product.variants.size > 1 -%}
+        <div class="k-field">
+          <label for="VariantSelect">{{ 'products.product.variant' | t }}</label>
+          <select class="k-select" id="VariantSelect" name="id" data-variant-select>
+            {%- for v in product.variants -%}
+              <option value="{{ v.id }}" data-price="{{ v.price | money }}" data-available="{{ v.available }}" {% if v == variant %}selected{% endif %} {% unless v.available %}disabled{% endunless %}>
+                {{ v.title }} — {{ v.price | money }}{% unless v.available %} ({{ 'products.product.sold_out' | t }}){% endunless %}
+              </option>
+            {%- endfor -%}
+          </select>
+        </div>
+      {%- else -%}
+        <input type="hidden" name="id" value="{{ variant.id }}">
+      {%- endif -%}
+
+      <div class="k-pdp__buy">
+        <input class="k-qty" type="number" name="quantity" value="1" min="1" aria-label="{{ 'products.product.quantity' | t }}">
+        <button type="submit" class="kbtn kbtn--{{ flavor }} kbtn--lg" data-add-to-cart data-variant-id="{{ variant.id }}" {% unless product.available %}disabled{% endunless %}>
+          {%- if product.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+        </button>
+      </div>
+    </form>
+
+    <div class="k-pdp__desc k-rte">{{ product.description }}</div>
+
+    {%- if section.settings.meta != blank -%}
+      <div class="k-pdp__meta">
+        {%- assign bits = section.settings.meta | split: '|' -%}
+        {%- for bit in bits -%}<span>{{ bit | strip }}</span>{%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Product",
+  "settings": [
+    { "type": "text", "id": "meta", "label": "Trust line (separate with |)", "default": "🌿 Non-toxic | ♻️ Refillable | 🚚 Free shipping over $35" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": { "type": "main-product" },
+    "recommended": {
+      "type": "featured-products",
+      "settings": { "heading": "Goes great with", "count": 3, "columns": "3", "link_label": "Shop all" }
+    },
+    "newsletter": { "type": "newsletter" }
+  },
+  "order": ["main", "recommended", "newsletter"]
+}

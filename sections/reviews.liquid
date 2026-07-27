@@ -1,0 +1,46 @@
+<section class="k-reviews">
+  <div class="k-wrap">
+    <h2 class="k-h2" style="text-align:center;margin-bottom:8px">{{ section.settings.heading }}</h2>
+    <p class="k-reviews__sub">{{ section.settings.subheading }}</p>
+    <div class="k-grid k-grid--3">
+      {%- for block in section.blocks -%}
+        <div class="k-review" {{ block.shopify_attributes }}>
+          <div class="k-review__stars">{% for i in (1..block.settings.stars) %}★{% endfor %}</div>
+          <p class="k-review__quote">“{{ block.settings.quote }}”</p>
+          <div class="k-review__by">{{ block.settings.author }}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Reviews",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Words from the back seat" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "45,000+ clips shipped · ⭐ 4.9 average" }
+  ],
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "My whole car smells like a candy store. Everyone asks what it is." },
+        { "type": "text", "id": "author", "label": "Author", "default": "Hailey B." },
+        { "type": "range", "id": "stars", "label": "Stars", "min": 1, "max": 5, "step": 1, "default": 5 }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Reviews",
+      "blocks": [
+        { "type": "review", "settings": { "quote": "My whole car smells like a candy store. Everyone asks what it is.", "author": "Hailey B." } },
+        { "type": "review", "settings": { "quote": "Cherry Bomb still going strong after 6 weeks. Zero spills, all juice.", "author": "Marcus T." } },
+        { "type": "review", "settings": { "quote": "Collected all six. Wave Rider is my summer, Cloud Nine is my winter.", "author": "Priya N." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

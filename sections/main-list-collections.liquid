@@ -1,0 +1,20 @@
+<div class="k-page">
+  <div class="k-page__head"><h1>Shop all</h1></div>
+  <div class="k-tiles__grid">
+    {%- for collection in collections -%}
+      <a href="{{ collection.url }}" class="kTile">
+        <div class="kTile__art kr-sunburst" data-sunburst-rays="fine" data-flavor="{% cycle 'cherry', 'tangerine', 'lime', 'sky' %}">
+          {%- if collection.featured_image -%}
+            <img src="{{ collection.featured_image | image_url: width: 600 }}" alt="{{ collection.title | escape }}" loading="lazy">
+          {%- else -%}
+            <span class="kr-wordmark-box" style="font-size:22px;border-width:3px">{{ shop.name | upcase }}</span>
+          {%- endif -%}
+        </div>
+        <div class="kTile__label">{{ collection.title }} <i data-lucide="arrow-right" style="width:20px;height:20px"></i></div>
+      </a>
+    {%- endfor -%}
+  </div>
+</div>
+{% schema %}
+{ "name": "Collections list" }
+{% endschema %}

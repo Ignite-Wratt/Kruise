@@ -1,0 +1,61 @@
+{%- liquid
+  assign flavor = settings.default_flavor | default: 'cherry'
+  assign notes = ''
+  for t in product.tags
+    assign tl = t | downcase
+    if tl contains 'flavor:'
+      assign flavor = tl | remove: 'flavor:' | strip
+    endif
+    if tl contains 'note:'
+      assign note = t | remove_first: 'note:' | remove_first: 'Note:' | strip
+      assign notes = notes | append: note | append: '||'
+    endif
+  endfor
+  if product.metafields.custom.flavor != blank
+    assign flavor = product.metafields.custom.flavor | downcase | strip
+  endif
+  assign note_list = notes | split: '||'
+  assign variant = product.selected_or_first_available_variant
+  assign badge = ''
+  assign badge_style = 'accent'
+  if product.available == false
+    assign badge = 'Sold out'
+    assign badge_style = 'neutral'
+  elsif product.tags contains 'best-seller'
+    assign badge = 'Best seller'
+  elsif product.tags contains 'new'
+    assign badge = 'New'
+  endif
+-%}
+<div class="pc">
+  <a class="pc__top kr-sunburst" data-sunburst-rays="fine" data-flavor="{{ flavor }}" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+    {%- if badge != blank -%}<span class="badge badge--{{ badge_style }}">{{ badge }}</span>{%- endif -%}
+    <span class="pc__circle">
+      {%- if product.featured_image -%}
+        <img src="{{ product.featured_image | image_url: width: 400 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" width="200" height="200">
+      {%- endif -%}
+    </span>
+  </a>
+  <div class="pc__body">
+    <h4 class="pc__name"><a href="{{ product.url }}">{{ product.title }}</a></h4>
+    {%- if settings.show_notes and note_list.size > 0 -%}
+      <div class="pc__notes">
+        {%- for n in note_list limit: 3 -%}<span class="tag tag--{{ flavor }}">{{ n }}</span>{%- endfor -%}
+      </div>
+    {%- endif -%}
+    <div class="pc__foot">
+      <span class="pc__price">
+        {%- if product.compare_at_price > product.price -%}<s>{{ product.compare_at_price | money }}</s>{%- endif -%}
+        {{ product.price | money }}
+      </span>
+      {%- if product.available -%}
+        <form method="post" action="{{ routes.cart_add_url }}">
+          <input type="hidden" name="id" value="{{ variant.id }}">
+          <button type="submit" class="kbtn kbtn--{{ flavor }} kbtn--sm" data-add-to-cart data-variant-id="{{ variant.id }}">Add</button>
+        </form>
+      {%- else -%}
+        <button class="kbtn kbtn--outline kbtn--sm" disabled>Sold out</button>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
