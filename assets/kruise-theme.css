@@ -56,6 +56,11 @@ a.kbtn:hover{color:inherit}
 .k-hero__ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px}
 .k-hero__trust{display:flex;align-items:center;gap:20px;margin-top:28px;font-family:var(--font-display);font-weight:700;color:var(--blueberry-900);font-size:14px;flex-wrap:wrap}
 .k-hero__art{position:relative;min-height:460px;display:grid;place-items:center}
+.k-hero__packs{display:flex;align-items:flex-end;justify-content:center;width:100%;max-width:560px;margin-inline:auto;padding:0 14px;box-sizing:border-box}
+.k-hero__packs img{width:auto;height:auto;flex:none;filter:drop-shadow(0 10px 0 rgba(22,24,58,.16))}
+.k-hero__packs img:nth-child(1){width:31%;transform:rotate(-7deg) translateY(-2%);margin-right:-7%;z-index:1}
+.k-hero__packs img:nth-child(2){width:38%;transform:rotate(-1deg);z-index:3;position:relative}
+.k-hero__packs img:nth-child(3){width:31%;transform:rotate(7deg) translateY(-2%);margin-left:-7%;z-index:2}
 
 /* Pack graphic */
 .k-pack{position:relative;width:320px;height:460px;border:4px solid var(--border-ink);border-radius:34px;box-shadow:var(--shadow-pop);overflow:hidden;padding:26px 22px}
@@ -89,9 +94,8 @@ a.kbtn:hover{color:inherit}
 .k-grid--3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .k-grid--4{grid-template-columns:repeat(4,minmax(0,1fr))}
 .pc{background:var(--white);border:3px solid var(--ink-900);border-radius:var(--radius-xl);box-shadow:var(--shadow-sticker-lg);overflow:hidden;display:flex;flex-direction:column}
-.pc__top{position:relative;height:180px;display:flex;align-items:center;justify-content:center;border-bottom:3px solid var(--ink-900);--sunburst-origin:50% 30%}
-.pc__circle{width:132px;height:132px;border-radius:var(--radius-pill);background:rgba(255,255,255,0.28);display:grid;place-items:center;box-shadow:inset 0 0 0 2px rgba(255,255,255,0.45)}
-.pc__circle img{max-width:78%;max-height:78%;object-fit:contain;filter:drop-shadow(0 3px 0 rgba(22,24,58,0.18))}
+.pc__top{position:relative;padding:22px 18px 18px;display:flex;align-items:center;justify-content:center;border-bottom:3px solid var(--ink-900)}
+.pc__pack{height:auto;width:64%;max-width:200px;filter:drop-shadow(0 6px 0 rgba(22,24,58,.14))}
 .pc__body{padding:var(--space-4);display:flex;flex-direction:column;gap:var(--space-3)}
 .pc__name{margin:0;font-family:var(--font-display);font-weight:800;font-size:22px;color:var(--blueberry-900)}
 .pc__notes{display:flex;flex-wrap:wrap;gap:6px}

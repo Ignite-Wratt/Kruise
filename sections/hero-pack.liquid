@@ -19,20 +19,10 @@
       {%- if section.settings.image != blank -%}
         <img src="{{ section.settings.image | image_url: width: 900 }}" alt="{{ section.settings.heading | escape }}" width="420" style="border:4px solid var(--border-ink);border-radius:34px;box-shadow:var(--shadow-pop)">
       {%- else -%}
-        <div class="k-pack kr-sunburst" data-flavor="{{ section.settings.pack_flavor }}">
-          <div class="k-pack__hole"></div>
-          <div class="k-pack__try kr-try-badge">TRY<br>ME</div>
-          <div class="k-pack__mark"><span class="kr-wordmark-box" style="font-size:44px">{{ section.settings.pack_wordmark }}</span></div>
-          <div class="k-pack__name">{{ section.settings.pack_name }}</div>
-          <div class="k-pack__disc"><span>{{ section.settings.pack_wordmark }}</span></div>
-          {%- if section.settings.pack_fruit != blank -%}
-            <img class="k-pack__fruit" src="{{ section.settings.pack_fruit | image_url: width: 400 }}" alt="">
-          {%- endif -%}
-          <div class="k-pack__spec">
-            <b>{{ section.settings.pack_duration }}</b>
-            <i>LONG LASTING</i>
-            <small>{{ section.settings.pack_volume }}</small>
-          </div>
+        <div class="k-hero__packs">
+          <img src="{% if section.settings.pack_left != blank %}{{ section.settings.pack_left | image_url: width: 500 }}{% else %}{{ 'pack-tropic-punch.png' | asset_url }}{% endif %}" alt="Kruise vent clip pack">
+          <img src="{% if section.settings.pack_center != blank %}{{ section.settings.pack_center | image_url: width: 600 }}{% else %}{{ 'pack-cherry-bombastic.png' | asset_url }}{% endif %}" alt="Kruise vent clip pack">
+          <img src="{% if section.settings.pack_right != blank %}{{ section.settings.pack_right | image_url: width: 500 }}{% else %}{{ 'pack-cotton-cloud.png' | asset_url }}{% endif %}" alt="Kruise vent clip pack">
         </div>
       {%- endif -%}
     </div>
@@ -52,27 +42,10 @@
     { "type": "url", "id": "cta2_link", "label": "Secondary link" },
     { "type": "text", "id": "trust", "label": "Trust line (separate with |)", "default": "🌿 Non-toxic | ♻️ Refillable | ⭐ 4.9 / 5" },
     { "type": "header", "content": "Artwork" },
-    { "type": "image_picker", "id": "image", "label": "Hero image (overrides the pack graphic)" },
-    {
-      "type": "select",
-      "id": "pack_flavor",
-      "label": "Pack flavour",
-      "options": [
-        { "value": "cherry", "label": "Cherry" },
-        { "value": "tangerine", "label": "Tangerine" },
-        { "value": "lemon", "label": "Lemon" },
-        { "value": "lime", "label": "Lime" },
-        { "value": "wave", "label": "Wave" },
-        { "value": "sky", "label": "Sky" },
-        { "value": "blueberry", "label": "Blueberry" }
-      ],
-      "default": "cherry"
-    },
-    { "type": "text", "id": "pack_wordmark", "label": "Wordmark", "default": "KRUISE" },
-    { "type": "text", "id": "pack_name", "label": "Pack scent name", "default": "Cherry Bombastic" },
-    { "type": "image_picker", "id": "pack_fruit", "label": "Pack cut-out image" },
-    { "type": "text", "id": "pack_duration", "label": "Duration", "default": "30 DAY" },
-    { "type": "text", "id": "pack_volume", "label": "Volume", "default": "10ML / 0.34 FL OZ" }
+    { "type": "image_picker", "id": "image", "label": "Hero image (overrides the pack trio)" },
+    { "type": "image_picker", "id": "pack_left", "label": "Left pack (defaults to Tropic Punch)" },
+    { "type": "image_picker", "id": "pack_center", "label": "Center pack (defaults to Cherry Bombastic)" },
+    { "type": "image_picker", "id": "pack_right", "label": "Right pack (defaults to Cotton Cloud)" }
   ],
   "presets": [{ "name": "Hero" }]
 }

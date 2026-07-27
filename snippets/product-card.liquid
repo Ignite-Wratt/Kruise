@@ -28,13 +28,11 @@
   endif
 -%}
 <div class="pc">
-  <a class="pc__top kr-sunburst" data-sunburst-rays="fine" data-flavor="{{ flavor }}" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+  <a class="pc__top" style="background:var(--{{ flavor }}-100)" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
     {%- if badge != blank -%}<span class="badge badge--{{ badge_style }}">{{ badge }}</span>{%- endif -%}
-    <span class="pc__circle">
-      {%- if product.featured_image -%}
-        <img src="{{ product.featured_image | image_url: width: 400 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy" width="200" height="200">
-      {%- endif -%}
-    </span>
+    {%- if product.featured_image -%}
+      <img class="pc__pack" src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.featured_image.alt | escape }}" loading="lazy">
+    {%- endif -%}
   </a>
   <div class="pc__body">
     <h4 class="pc__name"><a href="{{ product.url }}">{{ product.title }}</a></h4>
