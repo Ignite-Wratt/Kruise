@@ -1,0 +1,51 @@
+<section class="k-products">
+  <div class="k-wrap">
+    <div class="k-products__head">
+      <h2 class="k-h2">{{ section.settings.heading }}</h2>
+      {%- if section.settings.link_label != blank -%}
+        <a class="k-link" href="{% if section.settings.collection != blank %}{{ collections[section.settings.collection].url }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">{{ section.settings.link_label }} <i data-lucide="arrow-right" style="width:18px;height:18px"></i></a>
+      {%- endif -%}
+    </div>
+    <div class="k-grid k-grid--{{ section.settings.columns }}">
+      {%- assign coll = collections[section.settings.collection] -%}
+      {%- if coll.products.size > 0 -%}
+        {%- for product in coll.products limit: section.settings.count -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..section.settings.count) -%}
+          <div class="pc">
+            <div class="pc__top k-empty"><span>product {{ i }}</span></div>
+            <div class="pc__body">
+              <h4 class="pc__name">Scent name</h4>
+              <div class="pc__foot"><span class="pc__price">{{ 1200 | money }}</span><button class="kbtn kbtn--cherry kbtn--sm">Add</button></div>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Featured products",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Collect all six" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "count", "label": "Products", "min": 2, "max": 12, "step": 1, "default": 6 },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Columns",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "3"
+    },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "Shop all" }
+  ],
+  "presets": [{ "name": "Featured products" }]
+}
+{% endschema %}

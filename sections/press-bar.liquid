@@ -1,0 +1,41 @@
+<section class="k-press">
+  <div class="k-press__in">
+    <span class="k-press__label">{{ section.settings.label }}</span>
+    {%- for block in section.blocks -%}
+      {%- if block.settings.image != blank -%}
+        <img src="{{ block.settings.image | image_url: width: 300 }}" alt="{{ block.settings.name | escape }}" style="height:26px;width:auto;opacity:.6" {{ block.shopify_attributes }}>
+      {%- else -%}
+        <span class="k-press__name" {{ block.shopify_attributes }}>{{ block.settings.name }}</span>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Press bar",
+  "settings": [{ "type": "text", "id": "label", "label": "Label", "default": "As seen in" }],
+  "max_blocks": 8,
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Name", "default": "VOGUE" },
+        { "type": "image_picker", "id": "image", "label": "Logo image" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Press bar",
+      "blocks": [
+        { "type": "logo", "settings": { "name": "VOGUE" } },
+        { "type": "logo", "settings": { "name": "GQ" } },
+        { "type": "logo", "settings": { "name": "Allure" } },
+        { "type": "logo", "settings": { "name": "Cosmo" } },
+        { "type": "logo", "settings": { "name": "Hypebeast" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

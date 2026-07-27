@@ -1,0 +1,40 @@
+<div class="k-page">
+  <div class="k-page__head"><h1>{{ 'cart.general.title' | t }}</h1></div>
+  {%- if cart.item_count > 0 -%}
+    <form method="post" action="{{ routes.cart_url }}" novalidate>
+      <input type="hidden" name="attributes[_theme]" value="kruise">
+      {%- for item in cart.items -%}
+        <div class="k-cartrow">
+          <div class="k-cartrow__img">
+            {%- if item.image -%}<img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title | escape }}">{%- endif -%}
+          </div>
+          <div>
+            <div class="k-cartrow__name"><a href="{{ item.url }}">{{ item.product.title }}</a></div>
+            {%- unless item.variant.title contains 'Default' -%}<div class="k-cartrow__variant">{{ item.variant.title }}</div>{%- endunless -%}
+            <a class="k-cartrow__variant" href="{{ item.url_to_remove }}">{{ 'cart.general.remove' | t }}</a>
+          </div>
+          <input class="k-qty" type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="{{ 'products.product.quantity' | t }}">
+          <span class="pc__price">{{ item.final_line_price | money }}</span>
+        </div>
+      {%- endfor -%}
+      <div class="k-cart__foot">
+        <div>
+          <div class="k-cart__total">{{ 'cart.general.subtotal' | t }} {{ cart.total_price | money }}</div>
+          <div style="font-size:14px;color:var(--ink-500)">{{ 'cart.general.note' | t }}</div>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <button type="submit" name="update" class="kbtn kbtn--outline kbtn--md">Update</button>
+          <button type="submit" name="checkout" class="kbtn kbtn--accent kbtn--lg">{{ 'cart.general.checkout' | t }}</button>
+        </div>
+      </div>
+    </form>
+  {%- else -%}
+    <div style="text-align:center">
+      <p class="k-rte">{{ 'cart.general.empty' | t }}</p>
+      <a class="kbtn kbtn--primary kbtn--lg" href="{{ routes.all_products_collection_url }}">{{ 'cart.general.continue' | t }}</a>
+    </div>
+  {%- endif -%}
+</div>
+{% schema %}
+{ "name": "Cart" }
+{% endschema %}

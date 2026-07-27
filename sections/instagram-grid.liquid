@@ -1,0 +1,54 @@
+<section class="k-ig">
+  <div class="k-wrap">
+    <div class="k-ig__head">
+      <h2>{{ section.settings.heading }}</h2>
+      <a href="{{ section.settings.link }}" style="font-family:var(--font-display);font-weight:700;color:var(--cherry);font-size:15px">{{ section.settings.link_label }}</a>
+    </div>
+    <div class="k-ig__grid">
+      {%- for block in section.blocks -%}
+        <a href="{{ block.settings.link }}" class="kIgTile{% if block.settings.image == blank %} k-empty{% endif %}" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <img src="{{ block.settings.image | image_url: width: 500 }}" alt="{{ block.settings.handle | escape }}" loading="lazy">
+          {%- else -%}
+            <span>{{ block.settings.handle }}</span>
+          {%- endif -%}
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Instagram grid",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "@kruise in the wild" },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "Tag us to be featured" },
+    { "type": "url", "id": "link", "label": "Link" }
+  ],
+  "max_blocks": 12,
+  "blocks": [
+    {
+      "type": "post",
+      "name": "Post",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "handle", "label": "Handle", "default": "@kruise" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Instagram grid",
+      "blocks": [
+        { "type": "post", "settings": { "handle": "@ava.j" } },
+        { "type": "post", "settings": { "handle": "@driveby" } },
+        { "type": "post", "settings": { "handle": "@milo" } },
+        { "type": "post", "settings": { "handle": "@sunnyd" } },
+        { "type": "post", "settings": { "handle": "@rue" } },
+        { "type": "post", "settings": { "handle": "@theo.g" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,64 @@
+<section class="k-tiles">
+  <div class="k-wrap">
+    <div class="k-tiles__grid">
+      {%- for block in section.blocks -%}
+        {%- assign coll = collections[block.settings.collection] -%}
+        <a href="{% if block.settings.collection != blank %}{{ coll.url }}{% else %}{{ block.settings.link }}{% endif %}" class="kTile" style="background:var(--{{ block.settings.flavor }}-100)" {{ block.shopify_attributes }}>
+          <div class="kTile__art kr-sunburst" data-sunburst-rays="fine" data-flavor="{{ block.settings.flavor }}">
+            {%- if block.settings.image != blank -%}
+              <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.label | escape }}">
+            {%- else -%}
+              <span class="kr-wordmark-box" style="font-size:22px;border-width:3px">{{ block.settings.wordmark | default: shop.name | upcase }}</span>
+            {%- endif -%}
+          </div>
+          <div class="kTile__label">{{ block.settings.label }} <i data-lucide="arrow-right" style="width:20px;height:20px"></i></div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Category tiles",
+  "max_blocks": 8,
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Tile",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Vent Clips" },
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "url", "id": "link", "label": "Link (if no collection)" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "wordmark", "label": "Wordmark (if no image)", "default": "KRUISE" },
+        {
+          "type": "select",
+          "id": "flavor",
+          "label": "Colour",
+          "options": [
+            { "value": "cherry", "label": "Cherry" },
+            { "value": "tangerine", "label": "Tangerine" },
+            { "value": "lemon", "label": "Lemon" },
+            { "value": "lime", "label": "Lime" },
+            { "value": "wave", "label": "Wave" },
+            { "value": "sky", "label": "Sky" },
+            { "value": "blueberry", "label": "Blueberry" }
+          ],
+          "default": "cherry"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Category tiles",
+      "blocks": [
+        { "type": "tile", "settings": { "label": "Vent Clips", "flavor": "cherry" } },
+        { "type": "tile", "settings": { "label": "3-Packs", "flavor": "tangerine" } },
+        { "type": "tile", "settings": { "label": "Scent Bundles", "flavor": "lime" } },
+        { "type": "tile", "settings": { "label": "Refills", "flavor": "sky" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

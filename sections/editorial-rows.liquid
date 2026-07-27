@@ -1,0 +1,73 @@
+<section class="k-editorial">
+  <div class="k-wrap">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="k-h2" style="text-align:center;font-size:clamp(32px,4.5vw,52px);margin-bottom:48px">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    {%- for block in section.blocks -%}
+      <div class="k-editorial__row{% cycle '', ' k-editorial__row--flip' %}" {{ block.shopify_attributes }}>
+        <div class="k-editorial__media{% if block.settings.image == blank %} k-empty{% endif %}">
+          {%- if block.settings.image != blank -%}
+            <img src="{{ block.settings.image | image_url: width: 1200 }}" alt="{{ block.settings.heading | escape }}" loading="lazy">
+          {%- else -%}
+            <span>{{ block.settings.placeholder }}</span>
+          {%- endif -%}
+        </div>
+        <div class="k-editorial__text">
+          <div class="k-eyebrow" style="color:var(--{{ block.settings.flavor }}-900)">{{ block.settings.eyebrow }}</div>
+          <h3>{{ block.settings.heading }}</h3>
+          <p>{{ block.settings.body }}</p>
+          {%- if block.settings.cta_label != blank -%}
+            <a class="kbtn kbtn--{{ block.settings.flavor }} kbtn--md" href="{{ block.settings.cta_link }}">{{ block.settings.cta_label }}</a>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Editorial rows",
+  "settings": [{ "type": "text", "id": "heading", "label": "Heading", "default": "Scent every mile." }],
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Row",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "placeholder", "label": "Placeholder label", "default": "lifestyle image" },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "On the drive" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Make the commute smell good." },
+        { "type": "textarea", "id": "body", "label": "Body", "default": "One clip on the vent, and every red light smells like fresh-cut fruit." },
+        { "type": "text", "id": "cta_label", "label": "Button", "default": "Shop vent clips" },
+        { "type": "url", "id": "cta_link", "label": "Button link" },
+        {
+          "type": "select",
+          "id": "flavor",
+          "label": "Colour",
+          "options": [
+            { "value": "cherry", "label": "Cherry" },
+            { "value": "tangerine", "label": "Tangerine" },
+            { "value": "lemon", "label": "Lemon" },
+            { "value": "lime", "label": "Lime" },
+            { "value": "wave", "label": "Wave" },
+            { "value": "sky", "label": "Sky" },
+            { "value": "blueberry", "label": "Blueberry" }
+          ],
+          "default": "cherry"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Editorial rows",
+      "blocks": [
+        { "type": "row", "settings": { "flavor": "cherry", "placeholder": "lifestyle — the daily commute" } },
+        { "type": "row", "settings": { "flavor": "lime", "eyebrow": "Everywhere else", "heading": "Closets, lockers, gym bags.", "body": "Not just cars. Hang a clip anywhere that could use a little candy-shop glow-up.", "cta_label": "Shop bundles", "placeholder": "lifestyle — closet + locker" } },
+        { "type": "row", "settings": { "flavor": "wave", "eyebrow": "Keep it going", "heading": "Refill, don't rebuy.", "body": "Keep the clip, swap the scent. Half the price, half the waste, all the juice.", "cta_label": "Shop refills", "placeholder": "lifestyle — refill pack flatlay" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

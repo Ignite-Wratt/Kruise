@@ -1,0 +1,13 @@
+<article class="k-page">
+  <div class="k-page__head">
+    <h1>{{ article.title }}</h1>
+    <div class="k-review__by">{{ article.published_at | date: '%b %d, %Y' }}{% if article.author != blank %} · {{ article.author }}{% endif %}</div>
+  </div>
+  {%- if article.image -%}
+    <img src="{{ article.image | image_url: width: 1400 }}" alt="{{ article.title | escape }}" style="width:100%;border:3px solid var(--border-ink);border-radius:28px;margin-bottom:32px">
+  {%- endif -%}
+  <div class="k-rte" style="max-width:720px;margin:0 auto">{{ article.content }}</div>
+</article>
+{% schema %}
+{ "name": "Article" }
+{% endschema %}

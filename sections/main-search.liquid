@@ -1,0 +1,29 @@
+<div class="k-page">
+  <div class="k-page__head">
+    <h1>{{ 'general.search.title' | t }}</h1>
+    <form action="{{ routes.search_url }}" method="get" role="search" style="display:flex;gap:12px;max-width:520px;margin:20px auto 0">
+      <input class="k-select" style="flex:1" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" aria-label="{{ 'general.search.title' | t }}">
+      <button type="submit" class="kbtn kbtn--primary kbtn--md">Go</button>
+    </form>
+  </div>
+  {%- if search.performed -%}
+    {%- paginate search.results by 12 -%}
+      {%- if search.results.size > 0 -%}
+        <div class="k-grid k-grid--3">
+          {%- for item in search.results -%}
+            {%- if item.object_type == 'product' -%}
+              {% render 'product-card', product: item %}
+            {%- else -%}
+              <a class="k-review" href="{{ item.url }}"><div class="k-review__quote">{{ item.title }}</div></a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <p class="k-rte" style="text-align:center">{{ 'general.search.results' | t }} “{{ search.terms }}” — nothing found.</p>
+      {%- endif -%}
+    {%- endpaginate -%}
+  {%- endif -%}
+</div>
+{% schema %}
+{ "name": "Search" }
+{% endschema %}
