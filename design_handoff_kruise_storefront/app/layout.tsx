@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { KruiseCartProvider } from '../components/KruiseCartProvider';
 import { KruiseCartDrawer } from '../components/KruiseCartDrawer';
-import { KruiseSiteHeader } from '../components/KruiseSiteHeader';
-import { KruiseSiteFooter } from '../components/KruiseSiteFooter';
+import { KruiseV2Header } from '../components/KruiseV2Header';
+import { KruiseV2Footer } from '../components/KruiseV2Footer';
 
 export const metadata: Metadata = {
   title: 'Kruise — Smells like summer',
@@ -15,9 +15,9 @@ export default function rootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <KruiseCartProvider>
-          <KruiseSiteHeader />
+          <KruiseV2Header />
           {children}
-          <KruiseSiteFooter />
+          <KruiseV2Footer />
           <KruiseCartDrawer />
         </KruiseCartProvider>
       </body>

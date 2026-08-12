@@ -12,14 +12,10 @@ import type { CardFlavor } from '../../../lib/shopify-types';
 const chunky = '3px solid var(--border-ink)';
 const container: React.CSSProperties = { maxWidth: 'var(--container)', margin: '0 auto' };
 
-const bursts: Record<CardFlavor, [string, string]> = {
-  cherry: ['var(--cherry-900)', 'var(--cherry)'],
-  tangerine: ['#f0421c', 'var(--tangerine)'],
-  lemon: ['var(--lemon-900)', 'var(--lemon)'],
-  lime: ['var(--lime-900)', 'var(--lime)'],
-  wave: ['var(--wave)', '#3fb6a0'],
-  sky: ['var(--sky)', 'var(--sky-300)'],
-  blueberry: ['var(--blueberry)', 'var(--blueberry-500)'],
+// Map the product flavor onto its packaging swirl variant.
+const FLAVOR_SWIRL: Record<CardFlavor, string> = {
+  cherry: 'cherry', tangerine: 'tropic', lemon: 'tropic', lime: 'coconut',
+  wave: 'coconut', sky: 'cotton', marine: 'newcar', graphite: 'knight', blueberry: 'tsunami',
 };
 
 export async function generateMetadata({ params }: { params: { handle: string } }): Promise<Metadata> {
@@ -46,7 +42,7 @@ export default async function productPage({ params }: { params: { handle: string
 
   const all = await getProducts();
   const others = all.filter((p) => p.handle !== product.handle).slice(0, 3);
-  const [burstA, burstB] = bursts[product.flavor] || bursts.cherry;
+  const swirlKey = FLAVOR_SWIRL[product.flavor] ?? 'cotton';
 
   return (
     <div style={{ fontFamily: 'var(--font-body)', color: 'var(--text-body)' }}>
@@ -59,12 +55,12 @@ export default async function productPage({ params }: { params: { handle: string
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 56, alignItems: 'start' }}>
             {/* Pack visual */}
             <div
-              className="kr-sunburst"
-              data-sunburst-rays="fine"
+              className="kr-swirl"
+              data-swirl={swirlKey}
               style={{
                 position: 'relative', minHeight: 520, border: chunky, borderRadius: 34,
                 boxShadow: 'var(--shadow-pop)', overflow: 'hidden', display: 'grid', placeItems: 'center',
-                ['--sunburst-a' as any]: burstA, ['--sunburst-b' as any]: burstB, ['--sunburst-origin' as any]: '50% 40%',
+                ['--swirl-origin' as any]: '50% 40%',
               } as React.CSSProperties}
             >
               <div style={{ position: 'absolute', top: 22, left: '50%', transform: 'translateX(-50%)' }}>
@@ -105,7 +101,7 @@ export default async function productPage({ params }: { params: { handle: string
               <KruiseVariantPicker product={product} />
               <div style={{ marginTop: 34, borderTop: '2px solid var(--border-soft)', paddingTop: 22, display: 'grid', gap: 12 }}>
                 {[
-                  ['Lasts', '45+ days of scent, then swap the refill'],
+                  ['Lasts', '30 days of scent, then swap the refill'],
                   ['Fits', 'Any standard car vent — clip on, twist to dial in'],
                   ['Made with', 'Non-toxic, phthalate-free fragrance oils'],
                 ].map(([label, value]) => (

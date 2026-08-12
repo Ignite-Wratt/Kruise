@@ -64,13 +64,26 @@ Consumed changelog entries: 2026-08-11 "repackaged: swirl, 7-SKU range, retuned 
   The old v1 home (with stale "Cherry Bomb"/"Wave Rider" review names) is gone.
 - Added the 7 `paper-*.png` hangers to `public/assets`.
 
+**Phase 4 (done in a follow-up commit) — global v2 chrome + live data/cart**
+- New global chrome: `KruiseV2Header` (ticker + sticky menu-drawer header, cart bag wired to
+  `useCart()` count + `openCart`) and `KruiseV2Footer` (social strip + newsletter + `footer-minimal`),
+  swapped into `layout.tsx`; the PDP inherits them for free. Shared `KruiseMarquee` extracted.
+- Home is now data-driven: `app/page.tsx` awaits `getProducts()` and passes them in; the rail is all
+  7 SKUs and the hero its featured four, with name/image/price/notes/variant live from Shopify and
+  swirl/paper/copy from a per-handle editorial map. Add-to-cart (rail cards, hero, the drop's
+  "Add the five") calls `useCart().add(variant.id)`.
+- PDP fixed: its pack visual now uses `.kr-swirl` + `data-swirl` by flavor (was showing the default
+  swirl after the phase-2 change), and its `bursts` map — which broke typecheck once `marine`/
+  `graphite` joined `CardFlavor` — was replaced. "45+ days" → "30 days".
+- **Verified with a real `npm install` + `next build` (passes, 4 routes) and a running server:** the
+  assembled home renders — ticker/header/cart chrome, cherry-swirl hero from live data, 7-card rail
+  with correct per-scent swirls, "The Summer Five" drop with all five bundle names.
+
 **Still open**
-- Chrome is still v1: `layout.tsx` renders `KruiseSiteHeader`/`KruiseSiteFooter`, so the v2 ticker
-  sits under the v1 header. The v2 `menu`-drawer header + `footer-minimal` aren't wired (would need
-  a layout change + a PDP chrome wrap to avoid double chrome). 
-- v2 home content is the design reference's static copy — hero/rail/drop not yet wired to
-  `getProducts()`; the rail/drop "Add to cart" buttons are not wired to `KruiseCartProvider`.
-- `swirl-fine-white.svg` / `swirl-broad-white.svg` (ray-density variants) not added — nothing on the
-  home uses `data-swirl-rays`, so the rules were omitted rather than ported.
-- Node modules aren't installed in this checkout, so this was verified by CSS/asset render + manual
-  type review, not a full `next build`.
+- "The Summer Five" is editorial, not a real Shopify product; "Add the five" adds the five individual
+  clips as an approximation. Make it a real bundle product to sell it as one line.
+- Header search/account icons and footer links point at `#scents` / `#` — no dedicated search or
+  account pages exist yet.
+- `KruiseSiteHeader` / `KruiseSiteFooter` are now unused (kept in the tree, tree-shaken from the build).
+- Stockist logos are still placeholders; `swirl-fine-white.svg` / `swirl-broad-white.svg` (ray
+  variants) still not added — nothing uses `data-swirl-rays`.
