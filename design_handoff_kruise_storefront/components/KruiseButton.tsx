@@ -3,7 +3,7 @@ import React from 'react';
 
 export type ButtonVariant = 'primary' | 'accent' | 'flavor' | 'outline' | 'ghost';
 export type ButtonSize = 'sm' | 'md' | 'lg';
-export type Flavor = 'cherry' | 'tangerine' | 'lemon' | 'lime' | 'wave' | 'sky';
+export type Flavor = 'cherry' | 'tangerine' | 'lemon' | 'lime' | 'wave' | 'sky' | 'marine' | 'graphite';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
@@ -21,6 +21,7 @@ export function KruiseButton({ children, variant = 'primary', size = 'md', flavo
   const flavorFill: Record<Flavor, string> = {
     cherry: 'var(--cherry)', tangerine: 'var(--tangerine)', lemon: 'var(--lemon)',
     lime: 'var(--lime)', wave: 'var(--wave)', sky: 'var(--sky)',
+    marine: 'var(--marine)', graphite: 'var(--graphite)',
   };
   const flavorInk = (flavor === 'lemon' || flavor === 'tangerine' || flavor === 'sky') ? 'var(--ink-900)' : '#fff';
   const shadowInk = 'var(--ink-900)';

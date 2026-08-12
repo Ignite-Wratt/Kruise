@@ -14,7 +14,7 @@ import type { CardFlavor, ShopifyProduct } from './shopify-types';
  * Tags work too: `flavor:cherry`, `notes:Juicy Cherry`, `badge:NEW`.
  */
 
-export const FLAVORS: CardFlavor[] = ['cherry', 'tangerine', 'lemon', 'lime', 'wave', 'sky', 'blueberry'];
+export const FLAVORS: CardFlavor[] = ['cherry', 'tangerine', 'lemon', 'lime', 'wave', 'sky', 'marine', 'graphite', 'blueberry'];
 
 interface ScentPreset {
   match: RegExp;
@@ -25,14 +25,13 @@ interface ScentPreset {
 }
 
 const PRESETS: ScentPreset[] = [
-  { match: /cherry|bombast|berry\b/i, flavor: 'cherry', notes: ['Juicy Cherry', 'Sour Pop'], image: '/assets/cherries.png' },
-  { match: /cotton|cloud|candy floss/i, flavor: 'sky', notes: ['Cotton Candy', 'Vanilla'], image: '/assets/cloud.png' },
-  { match: /tropic|punch|pineapple|mango/i, flavor: 'tangerine', notes: ['Pineapple', 'Orange'], image: '/assets/fruit.png' },
-  { match: /tsunami|wave|breeze|ocean|sea/i, flavor: 'wave', notes: ['Sea Salt', 'Fresh Air'], image: '/assets/wave.png' },
-  { match: /clean|linen|machine|soap|fresh/i, flavor: 'blueberry', notes: ['Fresh Linen', 'Clean Soap'], image: '/assets/bubbles.png' },
-  { match: /coconut|bliss|vanilla/i, flavor: 'lime', notes: ['Coconut', 'Pineapple'], image: '/assets/fruit.png' },
-  { match: /lemon|citrus|zest/i, flavor: 'lemon', notes: ['Lemon Zest', 'Sherbet'], image: '/assets/fruit.png' },
-  { match: /lime|apple|melon|mint/i, flavor: 'lime', notes: ['Sour Lime', 'Green Apple'], image: '/assets/fruit.png' },
+  { match: /cherry|bombast|berry\b/i, flavor: 'cherry', notes: ['Juicy Cherry', 'Sour Pop'], image: '/assets/pack-cherry-bombastic.png' },
+  { match: /tropic|punch|pineapple|mango/i, flavor: 'tangerine', notes: ['Pineapple', 'Orange'], image: '/assets/pack-tropic-punch.png' },
+  { match: /coconut|bliss/i, flavor: 'wave', notes: ['Coconut', 'Pineapple'], image: '/assets/pack-coconut-bliss.png' },
+  { match: /cotton|cloud|candy floss/i, flavor: 'sky', notes: ['Cotton Candy', 'Vanilla'], image: '/assets/pack-cotton-cloud.png' },
+  { match: /new.?car|overdrive/i, flavor: 'marine', notes: [], image: '/assets/pack-new-car-overdrive.png' },
+  { match: /tsunami|breeze|ocean|sea/i, flavor: 'sky', notes: ['Sea Salt', 'Fresh Air'], image: '/assets/pack-tsunami-breeze.png' },
+  { match: /knight|black/i, flavor: 'graphite', notes: [], image: '/assets/pack-black-knight.png' },
 ];
 
 function preset(product: Pick<ShopifyProduct, 'handle' | 'title' | 'tags'>): ScentPreset | undefined {

@@ -8,13 +8,23 @@
   /* Core brand */
   --blueberry-900: #1b2a63; --blueberry-700: #253a86; --blueberry: #2e4699;
   --blueberry-500: #4459b4; --blueberry-300: #8f9bd6; --blueberry-100: #dfe3f4; --blueberry-50: #eef0fa;
-  /* Candy flavors */
-  --cherry-900: #8f1533; --cherry: #ed1b54; --cherry-300: #f78aa6; --cherry-100: #fcdde5;
-  --tangerine-900: #b25e00; --tangerine: #fb9b1e; --tangerine-300: #fdcb8a; --tangerine-100: #feeed8;
-  --lemon-900: #b28800; --lemon: #fbcb1e; --lemon-300: #fde58a; --lemon-100: #fef7d8;
-  --lime-900: #0c5c30; --lime: #189c48; --lime-300: #86d3a2; --lime-100: #d9f2e2;
-  --wave-900: #1c5772; --wave: #2e8aa8; --wave-300: #97cad9; --wave-100: #dceef3;
-  --sky-900: #3f8bab; --sky: #8fcde5; --sky-300: #c3e5f1; --sky-100: #e9f6fb;
+  /* Hue families — sampled pixel-exact from the 7-SKU packs (v2) */
+  --cherry-900: #a81a2a; --cherry-700: #c22128; --cherry: #e21f26; --cherry-300: #f28e8f; --cherry-100: #fbdedd;
+  --tangerine-900: #d9401f; --tangerine: #f16a21; --tangerine-300: #f9b384; --tangerine-100: #fde7d8;
+  --lemon-900: #b28800; --lemon: #f9a01e; --lemon-300: #fdd98a; --lemon-100: #fef4dc;
+  --lime-900: #16572c; --lime: #1f8a45; --lime-300: #8ac9a0; --lime-100: #dcf0e2;
+  --wave-900: #14776f; --wave: #22bab2; --wave-300: #8ad2da; --wave-100: #ddecec;
+  --marine-900: #245e9b; --marine: #3179c2; --marine-500: #4aaad9; --marine-300: #9dcbe8; --marine-100: #e0eef8;
+  --sky-900: #2f80c0; --sky-700: #3199d1; --sky: #71b9e1; --sky-300: #a2dae9; --sky-100: #e8f4fb;
+  --graphite-900: #171717; --graphite-700: #3d3d3d; --graphite: #4a4a4a; --graphite-500: #888888; --graphite-300: #c2c2c2; --graphite-100: #ebebeb;
+  /* Scent tokens — one pair per SKU (swirl tone A + soft tint) */
+  --scent-cherry-a: var(--cherry); --scent-cherry-tint: var(--cherry-100);
+  --scent-tropic-a: #e8391f; --scent-tropic-tint: var(--tangerine-100);
+  --scent-coconut-a: var(--wave); --scent-coconut-tint: var(--wave-100);
+  --scent-cotton-a: var(--sky-300); --scent-cotton-tint: var(--sky-100);
+  --scent-newcar-a: var(--marine); --scent-newcar-tint: var(--marine-100);
+  --scent-tsunami-a: var(--sky-700); --scent-tsunami-tint: var(--sky-100);
+  --scent-knight-a: var(--graphite-900); --scent-knight-tint: var(--graphite-100);
   /* Neutrals */
   --ink-900: #16183a; --ink-700: #33355c; --ink-500: #64668a; --ink-300: #a9abc4; --ink-100: #d9dae8;
   --paper: #fbfaff; --cream: #fff8ec; --white: #ffffff;

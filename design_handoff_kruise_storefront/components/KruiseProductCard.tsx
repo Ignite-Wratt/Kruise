@@ -24,6 +24,8 @@ export function KruiseProductCard({ name, image, price, notes = [], flavor = 'ch
     lime: ['var(--lime-900)', 'var(--lime)'],
     wave: ['var(--wave)', '#3fb6a0'],
     sky: ['var(--sky)', 'var(--sky-300)'],
+    marine: ['var(--marine-900)', 'var(--marine)'],
+    graphite: ['var(--graphite-900)', 'var(--graphite)'],
     blueberry: ['var(--blueberry)', 'var(--blueberry-500)'],
   };
   const [burstA, burstB] = bursts[flavor] || bursts.cherry;

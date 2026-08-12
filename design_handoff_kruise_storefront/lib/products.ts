@@ -106,7 +106,7 @@ function local(
     id: `local:${handle}`,
     handle,
     name,
-    description: `${name} — juicy, loud, and long-lasting. Clip it to the vent and let it rip. Smells fresh for 45+ days.`,
+    description: `${name} — juicy, loud, and long-lasting. Clip it to the vent and let it rip. 30 day long lasting.`,
     image,
     images: [image],
     price: '$12',
@@ -128,12 +128,13 @@ function local(
 }
 
 export const FALLBACK_PRODUCTS: KruiseProduct[] = [
-  local('cherry-bombastic', 'Cherry Bombastic', '/assets/cherries.png', 'cherry', ['Juicy Cherry', 'Sour Pop'], 'NEW'),
-  local('cotton-cloud', 'Cotton Cloud', '/assets/cloud.png', 'sky', ['Cotton Candy', 'Vanilla']),
-  local('tropic-punch', 'Tropic Punch', '/assets/fruit.png', 'tangerine', ['Pineapple', 'Orange'], 'BEST SELLER'),
-  local('tsunami-breeze', 'Tsunami Breeze', '/assets/wave.png', 'wave', ['Sea Salt', 'Fresh Air']),
-  local('clean-machine', 'Clean Machine', '/assets/bubbles.png', 'blueberry', ['Fresh Linen', 'Clean Soap']),
-  local('coconut-bliss', 'Coconut Bliss', '/assets/fruit.png', 'lime', ['Coconut', 'Pineapple']),
+  local('cherry-bombastic', 'Cherry Bombastic', '/assets/pack-cherry-bombastic.png', 'cherry', ['Juicy Cherry', 'Sour Pop'], 'NEW'),
+  local('tropic-punch', 'Tropic Punch', '/assets/pack-tropic-punch.png', 'tangerine', ['Pineapple', 'Orange'], 'BEST SELLER'),
+  local('coconut-bliss', 'Coconut Bliss', '/assets/pack-coconut-bliss.png', 'wave', ['Coconut', 'Pineapple']),
+  local('cotton-cloud', 'Cotton Cloud', '/assets/pack-cotton-cloud.png', 'sky', ['Cotton Candy', 'Vanilla']),
+  local('new-car-overdrive', 'New Car Overdrive', '/assets/pack-new-car-overdrive.png', 'marine', []),
+  local('tsunami-breeze', 'Tsunami Breeze', '/assets/pack-tsunami-breeze.png', 'sky', ['Sea Salt', 'Fresh Air']),
+  local('black-knight', 'Black Knight', '/assets/pack-black-knight.png', 'graphite', []),
 ];
 
 export const isLocalId = (id: string) => id.startsWith('local:');

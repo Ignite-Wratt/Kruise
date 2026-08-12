@@ -12,6 +12,8 @@ export function KruiseTag({ children, flavor = 'blueberry' as TagFlavor, size = 
     lime: ['var(--lime-100)', 'var(--lime-900)'],
     wave: ['var(--wave-100)', 'var(--wave-900)'],
     sky: ['var(--sky-100)', 'var(--sky-900)'],
+    marine: ['var(--marine-100)', 'var(--marine-900)'],
+    graphite: ['var(--graphite-100)', 'var(--graphite-900)'],
     neutral: ['var(--ink-100)', 'var(--ink-700)'],
   };
   const [bg, fg] = map[flavor] || map.blueberry;
