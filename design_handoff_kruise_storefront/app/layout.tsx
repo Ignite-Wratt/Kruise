@@ -7,7 +7,7 @@ import { KruiseSiteFooter } from '../components/KruiseSiteFooter';
 
 export const metadata: Metadata = {
   title: 'Kruise — Smells like summer',
-  description: 'Car air fresheners that smell like a candy store. Collect all six.',
+  description: 'Car air fresheners that smell like a candy store. Collect all seven.',
 };
 
 export default function rootLayout({ children }: { children: React.ReactNode }) {

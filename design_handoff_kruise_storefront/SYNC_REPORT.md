@@ -53,7 +53,24 @@ Consumed changelog entries: 2026-08-11 "repackaged: swirl, 7-SKU range, retuned 
 - Format swatches from the PDP changelog (Vent clip $12 / Paper hanger $6 / Clip + 2 refills $24)
   not applied yet — fallback still Single clip / 3-pack / Refill.
 
-**Deferred to later phases (this same sync)**
-- Swirl system: `.kr-sunburst` → `.kr-swirl` + `swirl-*.svg`; pack-art hero + product-card visuals.
-- The v2 drop-culture home rebuild — `app/page.tsx` on the `ticker-bar` / `hero-slideshow` /
-  `scent-rail` / `featured-drop` / … layout from `Kruise Storefront v2.html`.
+**Phase 2–3 (done in a follow-up commit)**
+- Swirl system ported to `globals.css` (`.kr-swirl` + per-scent `[data-swirl]`, `.kr-sunburst`
+  kept as back-compat alias) with the 8 `swirl-*.svg` in `public/assets`; `.kr-sticker-text`
+  and the re-cut `.kr-wordmark-box` added.
+- `KruiseProductCard` now shows pack art on a flat `--flavor-100` tile (white circle removed).
+- v2 drop-culture home rebuilt: new `components/KruiseV2Home.tsx` (hero slideshow, claims/stockist
+  marquees, scent rail, founder note, featured drop with gallery + format swatches, social strip,
+  newsletter), rendered by `app/page.tsx`. Verified swirl/pack/paper rendering in a browser harness.
+  The old v1 home (with stale "Cherry Bomb"/"Wave Rider" review names) is gone.
+- Added the 7 `paper-*.png` hangers to `public/assets`.
+
+**Still open**
+- Chrome is still v1: `layout.tsx` renders `KruiseSiteHeader`/`KruiseSiteFooter`, so the v2 ticker
+  sits under the v1 header. The v2 `menu`-drawer header + `footer-minimal` aren't wired (would need
+  a layout change + a PDP chrome wrap to avoid double chrome). 
+- v2 home content is the design reference's static copy — hero/rail/drop not yet wired to
+  `getProducts()`; the rail/drop "Add to cart" buttons are not wired to `KruiseCartProvider`.
+- `swirl-fine-white.svg` / `swirl-broad-white.svg` (ray-density variants) not added — nothing on the
+  home uses `data-swirl-rays`, so the rules were omitted rather than ported.
+- Node modules aren't installed in this checkout, so this was verified by CSS/asset render + manual
+  type review, not a full `next build`.

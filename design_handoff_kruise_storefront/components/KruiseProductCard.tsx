@@ -17,30 +17,15 @@ export interface Product {
 }
 
 export function KruiseProductCard({ name, image, price, notes = [], flavor = 'cherry' as CardFlavor, badge = null, onAdd }: Product & { onAdd?: () => void }) {
-  const bursts: Record<CardFlavor, [string, string]> = {
-    cherry: ['var(--cherry-900)', 'var(--cherry)'],
-    tangerine: ['#f0421c', 'var(--tangerine)'],
-    lemon: ['var(--lemon-900)', 'var(--lemon)'],
-    lime: ['var(--lime-900)', 'var(--lime)'],
-    wave: ['var(--wave)', '#3fb6a0'],
-    sky: ['var(--sky)', 'var(--sky-300)'],
-    marine: ['var(--marine-900)', 'var(--marine)'],
-    graphite: ['var(--graphite-900)', 'var(--graphite)'],
-    blueberry: ['var(--blueberry)', 'var(--blueberry-500)'],
-  };
-  const [burstA, burstB] = bursts[flavor] || bursts.cherry;
-
   return (
     <div style={{ background: 'var(--white)', border: '3px solid var(--ink-900)', borderRadius: 'var(--radius-xl)', boxShadow: 'var(--shadow-sticker-lg)', overflow: 'hidden', display: 'flex', flexDirection: 'column', width: '260px' }}>
-      <div className="kr-sunburst" data-sunburst-rays="fine" style={{
-        position: 'relative', ['--sunburst-a' as any]: burstA, ['--sunburst-b' as any]: burstB, ['--sunburst-origin' as any]: '50% 30%',
-        height: '180px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderBottom: '3px solid var(--ink-900)',
-      } as React.CSSProperties}>
-        {badge && <span style={{ position: 'absolute', top: 12, left: 12 }}><KruiseBadge tone={badge === 'SOLD OUT' ? 'neutral' : 'accent'}>{badge}</KruiseBadge></span>}
+      <div style={{
+        position: 'relative', background: `var(--${flavor}-100)`,
+        padding: '22px 18px 18px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderBottom: '3px solid var(--ink-900)',
+      }}>
+        {badge && <span style={{ position: 'absolute', top: 12, left: 12, zIndex: 1 }}><KruiseBadge tone={badge === 'SOLD OUT' ? 'neutral' : 'accent'}>{badge}</KruiseBadge></span>}
         {image && (
-          <div style={{ width: '132px', height: '132px', borderRadius: 'var(--radius-pill)', background: 'rgba(255,255,255,0.28)', display: 'grid', placeItems: 'center', boxShadow: 'inset 0 0 0 2px rgba(255,255,255,0.45)' }}>
-            <img src={image} alt={name} style={{ maxWidth: '78%', maxHeight: '78%', objectFit: 'contain', filter: 'drop-shadow(0 3px 0 rgba(22,24,58,0.18))' }} />
-          </div>
+          <img src={image} alt={name} style={{ width: '64%', maxWidth: 200, height: 'auto', filter: 'drop-shadow(0 6px 0 rgba(22,24,58,0.14))' }} />
         )}
       </div>
       <div style={{ padding: 'var(--space-4)', display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
